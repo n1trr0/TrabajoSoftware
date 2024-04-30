@@ -167,6 +167,7 @@ public class Login extends javax.swing.JFrame {
         Connection BD = conectarBD();
 
         if (BuscarUsuario(BD, correoS, contraS)) {
+            errorText.setVisible(false);
             JOptionPane.showMessageDialog(null, "Los datos introducidos son correctos", "Información", JOptionPane.INFORMATION_MESSAGE);
             Variables.logged = true;
             Variables.usuario = correoS;

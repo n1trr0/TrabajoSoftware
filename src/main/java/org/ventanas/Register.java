@@ -174,38 +174,42 @@ public class Register extends javax.swing.JFrame {
         String nombreS = nombre.getText();
         String apellidoS = apellido.getText();
         String telefonoS = telefono.getText();
-        if(!correoS.isEmpty() && !contraS.isEmpty() && !nombreS.isEmpty() && !apellidoS.isEmpty() && !telefonoS.isEmpty()){
-            Connection BD = (Connection) conectarBD();
-            if(comprobacionFormatoCorreo(correoS)){
-                if(comprobacionDisponibilidadCorreo((java.sql.Connection) BD,correoS)){
-                    if(comprobacionFormatoTelef(telefonoS)){
-                        if(comprobacionDisponibilidadTelefono((java.sql.Connection) BD,telefonoS)){
-                            RegistrarUsuario((java.sql.Connection) BD,nombreS,apellidoS,correoS,telefonoS,contraS);
-                            desconexion((java.sql.Connection) BD);
-                            JOptionPane.showMessageDialog(null, "El registro es exitoso, ya puede logearse :)", "Información", JOptionPane.INFORMATION_MESSAGE);
-                        }else{
-                            desconexion((java.sql.Connection) BD);
-                            errorText.setText("El telefono no esta disponible para registrarlo");
-                            errorText.setVisible(true);
-                        }
-                    }else{
-                        errorText.setText("El telefono no tiene un formato valido");
-                        errorText.setVisible(true);
-                    }
+        if(correoS.isEmpty() && contraS.isEmpty() && nombreS.isEmpty() && apellidoS.isEmpty() && telefonoS.isEmpty()){
+            errorText.setText("Por favor, rellene todos los campos para continuar");
+            errorText.setVisible(true);
+            return;
+        }
+
+        if(!comprobacionFormatoCorreo(correoS)){
+            errorText.setText("El correo no tiene un formato valido");
+            errorText.setVisible(true);
+            return;
+        }
+
+        Connection BD = (Connection) conectarBD();
+        if(comprobacionDisponibilidadCorreo((java.sql.Connection) BD,correoS)){
+            if(comprobacionFormatoTelef(telefonoS)){
+                if(comprobacionDisponibilidadTelefono((java.sql.Connection) BD,telefonoS)){
+                    RegistrarUsuario((java.sql.Connection) BD,nombreS,apellidoS,correoS,telefonoS,contraS);
+                    desconexion((java.sql.Connection) BD);
+                    JOptionPane.showMessageDialog(null, "El registro es exitoso, ya puede logearse :)", "Información", JOptionPane.INFORMATION_MESSAGE);
                 }else{
                     desconexion((java.sql.Connection) BD);
-                    errorText.setText("El correo no esta disponible para registrarlo");
+                    errorText.setText("El telefono no esta disponible para registrarlo");
                     errorText.setVisible(true);
                 }
             }else{
-                errorText.setText("El correo no tiene un formato valido");
+                errorText.setText("El telefono no tiene un formato valido");
                 errorText.setVisible(true);
             }
         }else{
-            errorText.setText("Por favor, rellene todos los campos para continuar");
+            desconexion((java.sql.Connection) BD);
+            errorText.setText("El correo no esta disponible para registrarlo");
             errorText.setVisible(true);
         }
     }
+
+
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
