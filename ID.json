@@ -1,0 +1,64 @@
+[
+  {
+    "type": "hotel-offers",
+    "hotel": {
+      "type": "hotel",
+      "hotelId": "ARMADALC",
+      "chainCode": "AR",
+      "dupeId": "700025872",
+      "name": "AC by Marriott Hotel Alcala de Henares",
+      "cityCode": "MAD",
+      "latitude": 40.5028,
+      "longitude": -3.36574
+    },
+    "available": true,
+    "offers": [
+      {
+        "id": "5H466O0F3A",
+        "checkInDate": "2024-04-30",
+        "checkOutDate": "2024-05-01",
+        "rateCode": "RAC",
+        "rateFamilyEstimated": {
+          "code": "PRO",
+          "type": "P"
+        },
+        "room": {
+          "type": "SM3",
+          "typeEstimated": {
+            "beds": 1,
+            "bedType": "QUEEN"
+          },
+          "description": {
+            "lang": "EN",
+            "text": "Prepay Non-refundable, changes up to 7 days prior to stay\n1 Queen(s), Wireless internet, complimentary"
+          }
+        },
+        "guests": {
+          "adults": 2
+        },
+        "price": {
+          "currency": "EUR",
+          "total": "93.50",
+          "base": "85.00",
+          "variations": {
+            "average": {
+              "base": "85.00"
+            },
+            "changes": [
+              {
+                "startDate": "2024-04-30",
+                "endDate": "2024-05-01",
+                "base": "85.00"
+              }
+            ]
+          }
+        },
+        "policies": {
+          "paymentType": "deposit"
+        },
+        "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers/5H466O0F3A"
+      }
+    ],
+    "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds\u003dARMADALC\u0026adults\u003d2"
+  }
+]
