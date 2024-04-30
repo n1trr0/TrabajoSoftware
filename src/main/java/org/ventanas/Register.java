@@ -1,6 +1,6 @@
 package org.ventanas;
 
-import com.sun.jdi.connect.spi.Connection;
+import java.sql.Connection;
 
 import javax.swing.*;
 
