@@ -158,7 +158,7 @@ public class Login extends javax.swing.JFrame {
         }
 
         if (!comprobacionFormatoCorreo(correoS)) {
-            errorText.setText("El correo o contraseña no son correctos");
+            errorText.setText("El correo no tiene un formato valido");
             errorText.setVisible(true);
 
             return;
@@ -174,7 +174,7 @@ public class Login extends javax.swing.JFrame {
             Variables.nivel = FuncionesGerente.conseguirNivel(BD, correoS, contraS);
             Variables.telefono = FuncionesUsuario.ConseguirTelefono(BD, correoS, contraS);
         } else {
-            errorText.setText("El correo no tiene un formato valido");
+            errorText.setText("El correo o contraseña no son correctos");
             errorText.setVisible(true);
         }
 
