@@ -179,32 +179,31 @@ public class Register extends javax.swing.JFrame {
             errorText.setVisible(true);
             return;
         }
-
         if(!comprobacionFormatoCorreo(correoS)){
             errorText.setText("El correo no tiene un formato valido");
             errorText.setVisible(true);
             return;
         }
-
+        if(!comprobacionFormatoTelef(telefonoS)){
+            errorText.setText("El telefono no tiene un formato valido");
+            errorText.setVisible(true);
+            return;
+        }
         Connection BD = (Connection) conectarBD();
-        if(comprobacionDisponibilidadCorreo((java.sql.Connection) BD,correoS)){
-            if(comprobacionFormatoTelef(telefonoS)){
-                if(comprobacionDisponibilidadTelefono((java.sql.Connection) BD,telefonoS)){
-                    RegistrarUsuario((java.sql.Connection) BD,nombreS,apellidoS,correoS,telefonoS,contraS);
-                    desconexion((java.sql.Connection) BD);
-                    JOptionPane.showMessageDialog(null, "El registro es exitoso, ya puede logearse :)", "Información", JOptionPane.INFORMATION_MESSAGE);
-                }else{
-                    desconexion((java.sql.Connection) BD);
-                    errorText.setText("El telefono no esta disponible para registrarlo");
-                    errorText.setVisible(true);
-                }
-            }else{
-                errorText.setText("El telefono no tiene un formato valido");
-                errorText.setVisible(true);
-            }
-        }else{
+        if(!comprobacionDisponibilidadCorreo((java.sql.Connection) BD,correoS)){
             desconexion((java.sql.Connection) BD);
             errorText.setText("El correo no esta disponible para registrarlo");
+            errorText.setVisible(true);
+            return;
+        }
+        if(comprobacionDisponibilidadTelefono((java.sql.Connection) BD,telefonoS)){
+            RegistrarUsuario((java.sql.Connection) BD,nombreS,apellidoS,correoS,telefonoS,contraS);
+            desconexion((java.sql.Connection) BD);
+            errorText.setVisible(false);
+            JOptionPane.showMessageDialog(null, "El registro es exitoso, ya puede logearse :)", "Información", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            desconexion((java.sql.Connection) BD);
+            errorText.setText("El telefono no esta disponible para registrarlo");
             errorText.setVisible(true);
         }
     }
