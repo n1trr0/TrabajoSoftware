@@ -1,4 +1,4 @@
-package org.example;
+package org.ventanas;
 
 import com.sun.jdi.connect.spi.Connection;
 

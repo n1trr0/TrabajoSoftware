@@ -1,4 +1,4 @@
-package org.example;
+package org.ventanas;
 import Data.Variables;
 public class Ventana extends javax.swing.JFrame  {
     /**

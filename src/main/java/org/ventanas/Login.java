@@ -1,4 +1,4 @@
-package org.example;
+package org.ventanas;
 
 import BBDD.FuncionesGerente;
 import BBDD.FuncionesUsuario;

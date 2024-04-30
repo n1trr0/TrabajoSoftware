@@ -1,4 +1,4 @@
-package org.example;
+package org.ventanas;
 import Data.Variables;
 
 public class PerfilUser extends javax.swing.JFrame {
