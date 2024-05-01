@@ -32,9 +32,11 @@ public class FuncionesReserva {
                     while (resultSet.next()) {
                         int id2 = resultSet.getInt("ID");
                         if (id2 == id) {
-                            String FechaF = resultSet.getString("Fecha");
+                            String FechaI = resultSet.getString("FechaInico");
+                            String FechaF = resultSet.getString("FechaFin");
                             String Hotel = resultSet.getString("Hotel");
-                            System.out.println("Reserva el dia " + FechaF + " en el hotel "+Hotel);
+                            int personas = resultSet.getInt("Personas");
+                            System.out.println("Reserva el dia " + FechaI + " en el hotel "+Hotel+" hasta el dia "+FechaF+" para "+personas+" personas");
                             compr = true;
                         }
                     }
@@ -50,9 +52,9 @@ public class FuncionesReserva {
     }
 
     //Comprueba
-    public static boolean BuscarReserva(Connection BD,String correo, String telef, String contra,String fecha,String hotel){
+    public static boolean BuscarReserva(Connection BD,String correo, String telef, String contra,String fechaI,String hotel){
         boolean compr2 = false;
-        if(BuscarUsuario(BD,correo,contra) && comprobacionFormatoFecha(fecha)) {
+        if(BuscarUsuario(BD,correo,contra) && comprobacionFormatoFecha(fechaI)) {
             try {
                 Statement statement = BD.createStatement();
 
@@ -73,7 +75,7 @@ public class FuncionesReserva {
                     while (resultSet.next()) {
                         int id2 = resultSet.getInt("ID");
                         if (id2 == id) {
-                            if(resultSet.getString("Fecha").equals(fecha) && resultSet.getString("Hotel").equals(hotel)) {
+                            if(resultSet.getString("FechaInicio").equals(fechaI) && resultSet.getString("Hotel").equals(hotel)) {
                                 System.out.println("El usuario "+nombre+" tiene una reserva planificada en esta fecha y en este hotel");
                                 compr2 = true;
                                 break;
@@ -95,28 +97,22 @@ public class FuncionesReserva {
         return compr2;
     }
 
-    public static void crearReservas(Connection BD,String correo, String telef, String contra,String hotel){
+    public static void crearReservas(Connection BD,String correo, String telef, String contra,String hotel,String fechaI,String fechaF,int personas){
         if(BuscarUsuario(BD,correo,contra)){
             try{
                 int id;
                 id = conseguirID(BD,correo,telef,contra);
-                Scanner scanner = new Scanner(System.in);
-                String fecha;
-                do {
-                    System.out.print("Introduzca la fecha de la reserva(En formato yyyy-mm-dd): ");
-                    fecha = scanner.nextLine();
-                }while(!comprobacionFormatoFecha(fecha));
                 Statement statement = BD.createStatement();
-                String sqlQuery = "INSERT INTO reservas (ID,Fecha,Hotel) VALUES ('"+id+"','" + fecha + "','"+ hotel +"')";
+                String sqlQuery = "INSERT INTO reservas (ID,FechaInicio,FechaFin,Hotel,Personas) VALUES ('"+id+"','" + fechaI + "','"+fechaF+"','"+ hotel +"','"+personas+"')";
                 statement.executeUpdate(sqlQuery);
-                System.out.println("Reserva hecha para la fecha "+fecha+" en el hotel "+hotel);
+                System.out.println("Reserva hecha desde "+fechaI+" hasta "+fechaF+" en el hotel "+hotel);
             }catch (SQLException e){
                 throw new RuntimeException(e);
             }
         }
     }
 
-    public static void eliminarReservas(Connection BD,String correo, String telef, String contra){
+    public static void eliminarReservas(Connection BD,String correo, String telef, String contra,String hotel,String fechaI){
         if(BuscarUsuario(BD,correo,contra)){
             int id;
             id = conseguirID(BD,correo,telef,contra);
@@ -129,17 +125,10 @@ public class FuncionesReserva {
                     Statement statement = BD.createStatement();
                     String sqlQuery = "SELECT * FROM reservas";
                     ResultSet resultSet = statement.executeQuery(sqlQuery);
-                    String fecha;
-                    do {
-                        System.out.print("Introduzca la fecha de la reserva que desea eliminar: ");
-                        fecha = scanner.nextLine();
-                    }while(!comprobacionFormatoFecha(fecha));
-                    System.out.print("Introduzca el nombre del hotel en el que esta hecha la reserva: ");
-                    String hotel = scanner.nextLine();
                     while(resultSet.next()){
-                        if(resultSet.getInt("ID")==id && resultSet.getString("Fecha").equals(fecha) && resultSet.getString("Hotel").equals(hotel)){
+                        if(resultSet.getInt("ID")==id && resultSet.getString("FechaInicio").equals(fechaI) && resultSet.getString("Hotel").equals(hotel)){
                             compr2=true;
-                            String elimBD = "DELETE FROM reservas WHERE ID='"+id+"' AND Fecha='"+fecha+"' AND Hotel='"+hotel+"'";
+                            String elimBD = "DELETE FROM reservas WHERE ID='"+id+"' AND FechaInicio='"+fechaI+"' AND Hotel='"+hotel+"'";
                             statement.executeUpdate(elimBD);
                             System.out.println("Reserva eliminada");
                             break;
@@ -155,16 +144,16 @@ public class FuncionesReserva {
         }
     }
 
-    public static void modificarReverva(Connection BD,String correo, String telef, String contra,String fecha,String hotel,String fechaN){
-        if(BuscarReserva(BD,correo,telef,contra,fecha,hotel)){
+    public static void modificarReverva(Connection BD,String correo, String telef, String contra,String fechaI,String hotel,String fechaNI,String fechaNF,int personas){
+        if(BuscarReserva(BD,correo,telef,contra,fechaI,hotel)){
             try {
                 System.out.println();
-                if(comprobacionFormatoFecha(fechaN)) {
+                if(comprobacionFormatoFecha(fechaNI) && comprobacionFormatoFecha(fechaNF)) {
                     int id = conseguirID(BD,correo,telef,contra);
                     Statement statement = BD.createStatement();
-                    String SQLQuery = "UPDATE reservas SET  Fecha= '" + fechaN + "' WHERE ID = '" + id + "' AND Hotel='"+hotel+"'";
+                    String SQLQuery = "UPDATE reservas SET FechaInicio= '" + fechaNI + "',FechaFin='"+fechaNF+"',Personas='"+personas+"' WHERE ID = '" + id + "' AND Hotel='"+hotel+"'";
                     statement.executeUpdate(SQLQuery);
-                    System.out.println("Reserva del hotel "+hotel+" modificada a "+fechaN);
+                    System.out.println("Reserva del hotel "+hotel+" modificada con "+fechaNI+" y con "+fechaNF);
                 }
             }catch (SQLException e){
                 throw new RuntimeException(e);

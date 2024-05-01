@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 import static BBDD.FuncionesGerente.conseguirID;
 import static BBDD.FuncionesUsuario.BuscarUsuario;
@@ -98,8 +99,15 @@ public class FuncionesComprobacion {
                             compr=false;
                             break;
                         }
-                    }else {
+                    }else if(mesA==1 || mesA==3 || mesA==5 || mesA==7 || mesA==8 || mesA==10 || mesA==12){
                         if (aux2 < 1 || aux2 > 31) {
+                            System.out.println("Dia invalido");
+                            compr=false;
+                            break;
+                        }
+                    }
+                    else{
+                        if (aux2 < 1 || aux2 > 30) {
                             System.out.println("Dia invalido");
                             compr=false;
                             break;
@@ -186,5 +194,18 @@ public class FuncionesComprobacion {
             }
         }
         return compr;
+    }
+
+    public static boolean comprobacionValidezFechas(String fechaI,String fechaF){
+
+        // Convertir el String a LocalDate
+        LocalDate fechaIN = LocalDate.parse(fechaI);
+        LocalDate fechaFN = LocalDate.parse(fechaF);
+
+        if (fechaFN.isBefore(fechaIN)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
