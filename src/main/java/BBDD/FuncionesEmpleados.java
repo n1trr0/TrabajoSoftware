@@ -29,7 +29,7 @@ public class FuncionesEmpleados {
                         int idR = resultSet.getInt("IDreserva");
                         String IDS = Integer.toString(idR);
                         int idU = resultSet.getInt("IDusuario");
-                        String IDUS = Integer.toString(idR);
+                        String IDUS = Integer.toString(idU);
                         String FechaI = resultSet.getString("FechaInicio");
                         String FechaF = resultSet.getString("FechaFin");
                         String Hotel = resultSet.getString("Hotel");
