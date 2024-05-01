@@ -101,7 +101,9 @@ public class Ventana extends javax.swing.JFrame  {
     }// </editor-fold>
 
     private void reservarButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
+        Reservar reservarVentana = new Reservar(this);
+        reservarVentana.setVisible(true);
+        this.setVisible(false);
     }
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,11 +131,7 @@ public class Ventana extends javax.swing.JFrame  {
     }
 
     public void updateVentana(){
-        if(Variables.logged){
-            perfilButton.setVisible(true);
-        }else {
-            perfilButton.setVisible(false);
-        }
+        perfilButton.setVisible(Variables.logged);
     }
 
     /**
@@ -162,6 +160,7 @@ public class Ventana extends javax.swing.JFrame  {
             java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
