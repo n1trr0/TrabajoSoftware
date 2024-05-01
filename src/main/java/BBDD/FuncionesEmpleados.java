@@ -24,9 +24,11 @@ public class FuncionesEmpleados {
                 while (resultSet.next()) {
                     if(resultSet.getString("Hotel").equals(hotel)) {
                         int id = resultSet.getInt("ID");
-                        String FechaF = resultSet.getString("Fecha");
+                        String FechaI = resultSet.getString("FechaInicio");
+                        String FechaF = resultSet.getString("FechaFin");
                         String Hotel = resultSet.getString("Hotel");
-                        System.out.println("ID: " + id + "  Fecha de reserva: " + FechaF + " Hotel: " + Hotel);
+                        int personas = resultSet.getInt("Personas");
+                        System.out.println("ID: " + id + "  Fecha de inicio de reserva: " + FechaI + "  Fecha de fin de reserva: "+FechaF+" Hotel: " + Hotel+" Num de personas: "+personas);
                     }
                 }
             }
