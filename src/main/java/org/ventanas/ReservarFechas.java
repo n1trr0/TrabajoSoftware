@@ -1,9 +1,14 @@
 package org.ventanas;
 
 import BBDD.FuncionesComprobacion;
+import BBDD.FuncionesReserva;
 import Data.Variables;
 
 import javax.swing.*;
+import java.sql.Connection;
+
+import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
+import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
 
 /**
  *
@@ -177,6 +182,9 @@ public class ReservarFechas extends javax.swing.JFrame {
             errorText.setVisible(true);
             return;
         }
+        Connection BD = (Connection) conectarBD();
+        FuncionesReserva.crearReservas(BD, Variables.usuario, Variables.telefono, Variables.password, Variables.hotel, fechaInicio.getText(), fechaFin.getText(), numPersonas.getValue());
+        desconexion((java.sql.Connection) BD);
     }
     // Variables declaration - do not modify
     private javax.swing.JFormattedTextField fechaFin;

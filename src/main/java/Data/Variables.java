@@ -6,5 +6,5 @@ public class Variables {
     public static String password;
     public static String telefono;
     public static int nivel;
-
+    public static String hotel;
 }
