@@ -1,5 +1,8 @@
 package org.ventanas;
 
+import BBDD.FuncionesComprobacion;
+import Data.Variables;
+
 import javax.swing.*;
 
 /**
@@ -31,9 +34,12 @@ public class ReservarFechas extends javax.swing.JFrame {
         fechaInicioText = new javax.swing.JLabel();
         numPersonasText = new javax.swing.JLabel();
         fechaFinText = new javax.swing.JLabel();
-        fechaInicio = new javax.swing.JTextField();
-        fechaFin = new javax.swing.JTextField();
         numPersonas = new javax.swing.JSlider();
+        formatoFechaText = new javax.swing.JLabel();
+        fechaInicio = new javax.swing.JFormattedTextField();
+        fechaFin = new javax.swing.JFormattedTextField();
+        reservar = new javax.swing.JButton();
+        errorText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -65,6 +71,23 @@ public class ReservarFechas extends javax.swing.JFrame {
         numPersonas.setMinimum(1);
         numPersonas.setPaintLabels(true);
 
+        formatoFechaText.setText("Formato fecha DD/MM/YYYY");
+
+        fechaInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+
+        fechaFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+
+        reservar.setText("Reservar");
+        reservar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservarActionPerformed(evt);
+            }
+        });
+
+        errorText.setForeground(new java.awt.Color(255, 0, 0));
+        errorText.setVisible(false);
+        errorText.setText("Raul");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,15 +99,22 @@ public class ReservarFechas extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(113, 113, 113)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(fechaInicioText, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                        .addComponent(numPersonasText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(fechaFinText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(fechaInicio)
-                                                .addComponent(fechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                                        .addComponent(numPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(errorText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(fechaInicioText, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                                        .addComponent(numPersonasText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(fechaFinText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(reservar)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(fechaInicio)
+                                                                .addComponent(numPersonas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                        .addComponent(formatoFechaText)
+                                                                        .addGap(18, 18, 18))
+                                                                .addComponent(fechaFin)))))
                                 .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -93,7 +123,11 @@ public class ReservarFechas extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(salirButton)
                                         .addComponent(volverButton))
-                                .addGap(109, 109, 109)
+                                .addGap(25, 25, 25)
+                                .addComponent(errorText)
+                                .addGap(34, 34, 34)
+                                .addComponent(formatoFechaText)
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(fechaInicioText)
                                         .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -105,7 +139,9 @@ public class ReservarFechas extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(numPersonasText)
                                         .addComponent(numPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 163, Short.MAX_VALUE))
+                                .addGap(66, 66, 66)
+                                .addComponent(reservar)
+                                .addGap(0, 74, Short.MAX_VALUE))
         );
 
         pack();
@@ -120,14 +156,39 @@ public class ReservarFechas extends javax.swing.JFrame {
         ventanaReserva.setVisible(true);
     }
 
+    private void reservarActionPerformed(java.awt.event.ActionEvent evt) {
+        if(!Variables.logged){
+            errorText.setText("Necesitar tener un inicio de sesion activo");
+            errorText.setVisible(true);
+            return;
+        }
+        if(!FuncionesComprobacion.comprobacionFormatoFecha(fechaInicio.getText())){
+            errorText.setText("Fecha de inicio debe de ser >2024");
+            errorText.setVisible(true);
+            return;
+        }
+        if(!FuncionesComprobacion.comprobacionFormatoFecha(fechaFin.getText())){
+            errorText.setText("Fecha de fin debe de ser >2024");
+            errorText.setVisible(true);
+            return;
+        }
+        if(!FuncionesComprobacion.comprobacionValidezFechas(fechaInicio.getText(), fechaFin.getText())){
+            errorText.setText("La fecha final no puede ser anterior a la inicial");
+            errorText.setVisible(true);
+            return;
+        }
+    }
     // Variables declaration - do not modify
-    private javax.swing.JTextField fechaFin;
+    private javax.swing.JFormattedTextField fechaFin;
     private javax.swing.JLabel fechaFinText;
-    private javax.swing.JTextField fechaInicio;
+    private javax.swing.JFormattedTextField fechaInicio;
     private javax.swing.JLabel fechaInicioText;
+    private javax.swing.JLabel formatoFechaText;
     private javax.swing.JSlider numPersonas;
     private javax.swing.JLabel numPersonasText;
     private javax.swing.JButton salirButton;
     private javax.swing.JButton volverButton;
+    private javax.swing.JButton reservar;
+    private javax.swing.JLabel errorText;
     // End of variables declaration
 }
