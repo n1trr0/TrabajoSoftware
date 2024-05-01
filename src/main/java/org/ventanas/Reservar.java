@@ -1,6 +1,7 @@
 package org.ventanas;
 
 import BBDD.FuncionesHoteles;
+import Data.Variables;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -204,6 +205,7 @@ public class Reservar extends javax.swing.JFrame {
         }
 
         errorText.setVisible(false);
+        Variables.hotel = selectedHotel;
         ReservarFechas reservarFechasVentana = new ReservarFechas(this);
         reservarFechasVentana.setVisible(true);
         this.setVisible(false);
