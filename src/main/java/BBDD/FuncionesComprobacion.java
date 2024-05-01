@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static BBDD.FuncionesGerente.conseguirID;
 import static BBDD.FuncionesUsuario.BuscarUsuario;
@@ -55,11 +56,15 @@ public class FuncionesComprobacion {
     }
 
     public static boolean comprobacionFormatoFecha(String fecha){
-        String fechaC="";
+        if (fecha.length() < 11) {
+            return false; // La fecha no tiene el formato esperado
+        }
+
+        String fechaC = "";
         char L;
-        for(int i = 0;i<4;i++){
-            L = fecha.charAt(7+i);
-            fechaC= fechaC + L;
+        for(int i = 0; i < 4; i++) {
+            L = fecha.charAt(7 + i);
+            fechaC = fechaC + L;
         }
         int fechaCC = Integer.parseInt(fechaC);
         return fechaCC >= 2024;
@@ -135,10 +140,17 @@ public class FuncionesComprobacion {
 
     public static boolean comprobacionValidezFechas(String fechaI,String fechaF){
 
-        // Convertir el String a LocalDate
-        LocalDate fechaIN = LocalDate.parse(fechaI);
-        LocalDate fechaFN = LocalDate.parse(fechaF);
+        // Crear formateador para el formato "DD/MM/AAAA"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        return !fechaFN.isBefore(fechaIN);
+        // Convertir las cadenas de fecha en objetos LocalDate
+        LocalDate dateI = LocalDate.parse(fechaI, formatter);
+        LocalDate dateF = LocalDate.parse(fechaF, formatter);
+
+        if (dateI.compareTo(dateF) < 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

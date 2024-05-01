@@ -26,20 +26,23 @@ public class FuncionesEmpleados {
                 while (resultSet.next()) {
                     if(resultSet.getString("Hotel").equals(hotel)) {
                         ArrayList<String> fila = new ArrayList<>();
-                        int id = resultSet.getInt("ID");
-                        String IDS = Integer.toString(id);
+                        int idR = resultSet.getInt("IDreserva");
+                        String IDS = Integer.toString(idR);
+                        int idU = resultSet.getInt("IDusuario");
+                        String IDUS = Integer.toString(idR);
                         String FechaI = resultSet.getString("FechaInicio");
                         String FechaF = resultSet.getString("FechaFin");
                         String Hotel = resultSet.getString("Hotel");
                         int personas = resultSet.getInt("Personas");
                         String personasS = Integer.toString(personas);
                         fila.add(IDS);
+                        fila.add(IDUS);
                         fila.add(FechaI);
                         fila.add(FechaF);
                         fila.add(Hotel);
                         fila.add(personasS);
                         tabla.add(fila);
-                        System.out.println("ID: " + id + "  Fecha de inicio de reserva: " + FechaI + "  Fecha de fin de reserva: "+FechaF+" Hotel: " + Hotel+" Num de personas: "+personas);
+                        System.out.println("ID: " + idU + "  Fecha de inicio de reserva: " + FechaI + "  Fecha de fin de reserva: "+FechaF+" Hotel: " + Hotel+" Num de personas: "+personas);
                     }
                 }
             }

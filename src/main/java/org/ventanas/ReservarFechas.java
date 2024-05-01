@@ -9,6 +9,7 @@ import java.sql.Connection;
 
 import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
 import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
+import static BBDD.FuncionesReserva.*;
 
 /**
  *
@@ -162,30 +163,37 @@ public class ReservarFechas extends javax.swing.JFrame {
     }
 
     private void reservarActionPerformed(java.awt.event.ActionEvent evt) {
+        System.out.println("Fecha IN:"+fechaInicio.getText());
+        System.out.println("Fecha OUT:"+fechaFin.getText());
+        if(fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty()){
+            errorText.setText("Rellena los campos de las fechas para continuar");
+            errorText.setVisible(true);
+            return;
+        }
         if(!Variables.logged){
             errorText.setText("Necesitar tener un inicio de sesion activo");
             errorText.setVisible(true);
             return;
         }
-        if(!FuncionesComprobacion.comprobacionFormatoFecha(fechaInicio.getText())){
+        if(FuncionesComprobacion.comprobacionFormatoFecha(fechaInicio.getText())){
             errorText.setText("Fecha de inicio debe de ser >2024");
             errorText.setVisible(true);
             return;
         }
-        if(!FuncionesComprobacion.comprobacionFormatoFecha(fechaFin.getText())){
+        if(FuncionesComprobacion.comprobacionFormatoFecha(fechaFin.getText())){
             errorText.setText("Fecha de fin debe de ser >2024");
             errorText.setVisible(true);
             return;
         }
-        if(!FuncionesComprobacion.comprobacionValidezFechas(fechaInicio.getText(), fechaFin.getText())){
+        if(FuncionesComprobacion.comprobacionValidezFechas(fechaInicio.getText(), fechaFin.getText())){
             errorText.setText("La fecha final no puede ser anterior a la inicial");
             errorText.setVisible(true);
             return;
         }
         errorText.setVisible(false);
-        Connection BD = (Connection) conectarBD();
-        FuncionesReserva.crearReservas(BD, Variables.usuario, Variables.telefono, Variables.password, Variables.hotel, fechaInicio.getText(), fechaFin.getText(), numPersonas.getValue());
-        desconexion((java.sql.Connection) BD);
+        Connection BD = conectarBD();
+        crearReservas(BD,Variables.usuario,Variables.telefono,Variables.password,Variables.hotel,fechaInicio.getText(),fechaFin.getText(),numPersonas.getValue());
+        desconexion(BD);
     }
     // Variables declaration - do not modify
     private javax.swing.JFormattedTextField fechaFin;
