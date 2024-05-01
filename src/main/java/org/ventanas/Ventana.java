@@ -128,6 +128,11 @@ public class Ventana extends javax.swing.JFrame  {
             perfilUser.setVisible(true);
             this.setVisible(false);
         }
+        if (Variables.nivel == 1){
+            PerfilTrabajador perfilTrabajador = new PerfilTrabajador(this);
+            perfilTrabajador.setVisible(true);
+            this.setVisible(false);
+        }
     }
 
     public void updateVentana(){

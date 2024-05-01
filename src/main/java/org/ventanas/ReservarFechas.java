@@ -182,6 +182,7 @@ public class ReservarFechas extends javax.swing.JFrame {
             errorText.setVisible(true);
             return;
         }
+        errorText.setVisible(false);
         Connection BD = (Connection) conectarBD();
         FuncionesReserva.crearReservas(BD, Variables.usuario, Variables.telefono, Variables.password, Variables.hotel, fechaInicio.getText(), fechaFin.getText(), numPersonas.getValue());
         desconexion((java.sql.Connection) BD);

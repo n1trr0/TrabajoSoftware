@@ -1,8 +1,5 @@
 package org.ventanas;
 
-import org.ventanas.Ventana;
-
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.util.ArrayList;
@@ -10,20 +7,20 @@ import java.util.ArrayList;
 import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
 import static BBDD.FuncionesEmpleados.mostrarReservasTodas;
 
-public class PerfilTrabajdor extends javax.swing.JFrame {
+public class VerReservas extends javax.swing.JFrame {
 
-    private static Ventana ventanaPrincipal;
+    private static PerfilTrabajador ventanaPerfil;
     private javax.swing.JButton salirButton;
     private javax.swing.JButton volverButton;
     private javax.swing.JTable tabla;
 
-    public PerfilTrabajdor(Ventana parent) {
-        this.ventanaPrincipal = parent;
+    public VerReservas(PerfilTrabajador parent) {
+        this.ventanaPerfil = parent;
         initComponents();
         setLocationRelativeTo(parent);
     }
 
-    public PerfilTrabajdor() {
+    public VerReservas() {
         initComponents();
     }
 
@@ -91,34 +88,6 @@ public class PerfilTrabajdor extends javax.swing.JFrame {
 
         pack();
     }
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PerfilTrabajdor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PerfilTrabajdor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PerfilTrabajdor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PerfilTrabajdor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ventanaPrincipal = new Ventana();
-                new PerfilTrabajdor().setVisible(true);
-            }
-        });
-    }
     private Object[][]devolverarray(ArrayList<ArrayList<String>>hoteles){
         Object[][] arrayBidimensional = new Object[hoteles.size() + 1][]; // Incrementa en 1 para incluir el nuevo dato
 
@@ -133,7 +102,6 @@ public class PerfilTrabajdor extends javax.swing.JFrame {
     }
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
-        ventanaPrincipal.setVisible(true);
-        ventanaPrincipal.updateVentana();
+        ventanaPerfil.setVisible(true);
     }
 }
