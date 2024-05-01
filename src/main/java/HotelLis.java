@@ -155,8 +155,8 @@ public class HotelLis {
 
     public static void main(String[] args) throws ResponseException, InterruptedException {
         listHotels("MAD");
-        writeofferId();
-        getofferid();
+       // writeofferId();
+        //getofferid();
     }
 
 

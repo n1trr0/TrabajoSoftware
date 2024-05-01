@@ -174,6 +174,7 @@ public class Login extends javax.swing.JFrame {
             Variables.password = contraS;
             Variables.nivel = FuncionesGerente.conseguirNivel(BD, correoS, contraS);
             Variables.telefono = FuncionesUsuario.ConseguirTelefono(BD, correoS, contraS);
+
         } else {
             errorText.setText("El correo o contraseña no son correctos");
             errorText.setVisible(true);
