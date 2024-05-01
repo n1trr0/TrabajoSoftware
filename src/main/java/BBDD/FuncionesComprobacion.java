@@ -55,77 +55,14 @@ public class FuncionesComprobacion {
     }
 
     public static boolean comprobacionFormatoFecha(String fecha){
-        boolean compr=true;
-        String aux="";
-        int aux2;
-        int mesA=0;
-        if(fecha.charAt(4)=='-' && fecha.charAt(7)=='-' && fecha.length()==10){
-            for(int i = 0;i<fecha.length();i++){
-                if(i<=3 || i==5 || i==6 || i==8 || i==9){
-                    if(!Character.isDigit(fecha.charAt(i))){
-                        compr=false;
-                        break;
-                    }
-                    else{
-                        aux = aux + fecha.charAt(i);
-                    }
-                }
-                if(i==4){
-                    aux2 = Integer.parseInt(aux);
-                    if(aux2<2024){
-                        System.out.println("Año invalido");
-                        compr=false;
-                        break;
-                    }
-                    aux2=0;
-                    aux="";
-                }
-                if(i==7){
-                    aux2 = Integer.parseInt(aux);
-                    if(aux2<1 || aux2>12){
-                        System.out.println("Mes invalido");
-                        compr=false;
-                        break;
-                    }
-                    mesA=aux2;
-                    aux2=0;
-                    aux="";
-                }
-                if(i+1==10){
-                    aux2 = Integer.parseInt(aux);
-                    if(mesA==2){
-                        if (aux2 < 1 || aux2 > 28) {
-                            System.out.println("Dia invalido");
-                            compr=false;
-                            break;
-                        }
-                    }else if(mesA==1 || mesA==3 || mesA==5 || mesA==7 || mesA==8 || mesA==10 || mesA==12){
-                        if (aux2 < 1 || aux2 > 31) {
-                            System.out.println("Dia invalido");
-                            compr=false;
-                            break;
-                        }
-                    }
-                    else{
-                        if (aux2 < 1 || aux2 > 30) {
-                            System.out.println("Dia invalido");
-                            compr=false;
-                            break;
-                        }
-                    }
-                    aux2=0;
-                    aux="";
-                }
-            }
-            if(!compr){
-                System.out.println("La fecha no tiene un formato valido");
-            }
+        String fechaC="";
+        char L;
+        for(int i = 0;i<4;i++){
+            L = fecha.charAt(7+i);
+            fechaC= fechaC + L;
         }
-        else{
-            compr=false;
-            System.out.println("La fecha no tiene un formato valido");
-        }
-        return compr;
+        int fechaCC = Integer.parseInt(fechaC);
+        return fechaCC >= 2024;
     }
 
     public static boolean comprobacionDisponibilidadCorreo(Connection BD, String correo){
@@ -202,10 +139,6 @@ public class FuncionesComprobacion {
         LocalDate fechaIN = LocalDate.parse(fechaI);
         LocalDate fechaFN = LocalDate.parse(fechaF);
 
-        if (fechaFN.isBefore(fechaIN)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !fechaFN.isBefore(fechaIN);
     }
 }
