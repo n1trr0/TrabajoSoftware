@@ -1,8 +1,14 @@
 package org.ventanas;
 
+import BBDD.FuncionesHoteles;
+
 import javax.swing.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Enumeration;
+
+import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
+import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
 
 /**
  *
@@ -11,6 +17,7 @@ import java.util.Enumeration;
 public class Reservar extends javax.swing.JFrame {
     private String selectedHotel;
     private ArrayList<JRadioButton> buttons;
+    private ArrayList<String> listaHoteles;
     private JFrame ventanaPrincipal;
     /**
      * Creates new form Reservar
@@ -19,6 +26,7 @@ public class Reservar extends javax.swing.JFrame {
         this.ventanaPrincipal = parent;
         initComponents();
         setLocationRelativeTo(parent);
+        updateHotelButtons();
     }
 
     /**
@@ -69,6 +77,7 @@ public class Reservar extends javax.swing.JFrame {
 
         hotelSelection.add(hotel10);
 
+        listaHoteles = new ArrayList<>();
         buttons = new ArrayList<>();
         buttons.add(hotel1);
         buttons.add(hotel2);
@@ -209,6 +218,15 @@ public class Reservar extends javax.swing.JFrame {
         return null;
     }
 
+    public void updateHotelButtons(){
+        Connection BD = (Connection) conectarBD();
+        listaHoteles = FuncionesHoteles.conseguirNombreHoteles(BD);
+        desconexion((java.sql.Connection) BD);
+
+        for(int i = 0; i< buttons.size(); i++){
+            buttons.get(i).setText(listaHoteles.get(i));
+        }
+    }
     // Variables declaration - do not modify                     
     private javax.swing.JRadioButton hotel1;
     private javax.swing.JRadioButton hotel10;
