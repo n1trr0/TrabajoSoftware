@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class FuncionesEmpleados {
     public static ArrayList<ArrayList<String>> mostrarReservasTodas(Connection BD, String hotel){
-        ArrayList<String> fila = new ArrayList<>();
         ArrayList<ArrayList<String>> tabla = new ArrayList<>();
         try {
             Statement statement = BD.createStatement();
@@ -26,7 +25,7 @@ public class FuncionesEmpleados {
                 resultSet = statement.executeQuery(sqlQuery);
                 while (resultSet.next()) {
                     if(resultSet.getString("Hotel").equals(hotel)) {
-                        fila.clear();
+                        ArrayList<String> fila = new ArrayList<>();
                         int id = resultSet.getInt("ID");
                         String IDS = Integer.toString(id);
                         String FechaI = resultSet.getString("FechaInicio");

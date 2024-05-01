@@ -5,6 +5,7 @@ import Data.Variables;
 
 import javax.swing.*;
 
+
 /**
  *
  * @author Raul
@@ -177,6 +178,7 @@ public class ReservarFechas extends javax.swing.JFrame {
             errorText.setVisible(true);
             return;
         }
+
     }
     // Variables declaration - do not modify
     private javax.swing.JFormattedTextField fechaFin;
