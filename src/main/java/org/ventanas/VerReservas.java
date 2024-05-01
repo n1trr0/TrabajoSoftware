@@ -1,7 +1,9 @@
 package org.ventanas;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
@@ -13,6 +15,7 @@ public class VerReservas extends javax.swing.JFrame {
     private javax.swing.JButton salirButton;
     private javax.swing.JButton volverButton;
     private javax.swing.JTable tabla;
+    private javax.swing.JScrollBar scrollBar;
 
     public VerReservas(PerfilTrabajador parent) {
         this.ventanaPerfil = parent;
@@ -34,6 +37,8 @@ public class VerReservas extends javax.swing.JFrame {
         salirButton = new javax.swing.JButton();
         volverButton = new javax.swing.JButton();
         tabla = new javax.swing.JTable(); // Aquí inicializamos la variable de instancia tabla
+        scrollBar=new JScrollBar();
+        scrollBar.setBorder(BorderFactory.createLineBorder(Color.black));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
@@ -53,8 +58,8 @@ public class VerReservas extends javax.swing.JFrame {
             }
         });
 
-        ArrayList<ArrayList<String>> datos = mostrarReservasTodas(conectarBD(),"Ambassador");
-        String[] columnas = {"id", "FechaInicio", "FechaFin", "Hotel", "Personas"};
+        ArrayList<ArrayList<String>> datos = mostrarReservasTodas(conectarBD(),"AVENIDA AMERICA");
+        String[] columnas = {"IDReserva","IDUsuario", "FechaInicio", "FechaFin", "Hotel", "Personas"};
         DefaultTableModel tableModel = new DefaultTableModel(devolverarray(datos), columnas) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -74,6 +79,7 @@ public class VerReservas extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
                                 .addComponent(salirButton))
                         .addComponent(tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                        .addComponent(scrollBar)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,6 +89,7 @@ public class VerReservas extends javax.swing.JFrame {
                                         .addComponent(volverButton))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                                .addComponent(scrollBar)
                                 .addContainerGap())
         );
 
@@ -91,7 +98,7 @@ public class VerReservas extends javax.swing.JFrame {
     private Object[][]devolverarray(ArrayList<ArrayList<String>>hoteles){
         Object[][] arrayBidimensional = new Object[hoteles.size() + 1][]; // Incrementa en 1 para incluir el nuevo dato
 
-        Object[] nuevoDato = {"ID", "FECHA INICIO", "FECHA DE FIN", "HOTEL", "PERSONAS"};
+        Object[] nuevoDato = {"IDReserva","IDUsuario", "FechaInicio", "FechaFin", "Hotel", "Personas"};
         arrayBidimensional[0] = nuevoDato;
 
         for (int i = 0; i < hoteles.size(); i++) { // Itera solo hasta hoteles.size()
