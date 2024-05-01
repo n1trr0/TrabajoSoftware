@@ -204,6 +204,9 @@ public class Reservar extends javax.swing.JFrame {
         }
 
         errorText.setVisible(false);
+        ReservarFechas reservarFechasVentana = new ReservarFechas(this);
+        reservarFechasVentana.setVisible(true);
+        this.setVisible(false);
     }
 
     public String getSelectedButtonText(ButtonGroup buttonGroup) {
