@@ -1,12 +1,16 @@
 package org.ventanas;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 /**
  *
  * @author Raul
  */
 public class Reservar extends javax.swing.JFrame {
+    private String selectedHotel;
+    private ArrayList<JRadioButton> buttons;
     private JFrame ventanaPrincipal;
     /**
      * Creates new form Reservar
@@ -39,6 +43,8 @@ public class Reservar extends javax.swing.JFrame {
         hotel10 = new javax.swing.JRadioButton();
         salirButton = new javax.swing.JButton();
         volverButton = new javax.swing.JButton();
+        continueButton = new javax.swing.JButton();
+        errorText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -63,6 +69,18 @@ public class Reservar extends javax.swing.JFrame {
 
         hotelSelection.add(hotel10);
 
+        buttons = new ArrayList<>();
+        buttons.add(hotel1);
+        buttons.add(hotel2);
+        buttons.add(hotel3);
+        buttons.add(hotel4);
+        buttons.add(hotel5);
+        buttons.add(hotel6);
+        buttons.add(hotel7);
+        buttons.add(hotel8);
+        buttons.add(hotel9);
+        buttons.add(hotel10);
+
         salirButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         salirButton.setText("X");
         salirButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,28 +97,48 @@ public class Reservar extends javax.swing.JFrame {
             }
         });
 
+        continueButton.setText("Continuar");
+        continueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continueButtonActionPerformed(evt);
+            }
+        });
+
+        errorText.setForeground(new java.awt.Color(255, 0, 0));
+        errorText.setText("Seleciona un hotel");
+        errorText.setVisible(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(105, 105, 105)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(hotel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(hotel10, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                                .addContainerGap(220, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(volverButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(salirButton))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(continueButton)
+                                .addGap(209, 209, 209))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(105, 105, 105)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(hotel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(hotel10, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(199, 199, 199)
+                                                .addComponent(errorText)))
+                                .addContainerGap(195, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +146,9 @@ public class Reservar extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(salirButton)
                                         .addComponent(volverButton))
-                                .addGap(58, 58, 58)
+                                .addGap(24, 24, 24)
+                                .addComponent(errorText)
+                                .addGap(18, 18, 18)
                                 .addComponent(hotel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(hotel2)
@@ -128,8 +168,11 @@ public class Reservar extends javax.swing.JFrame {
                                 .addComponent(hotel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(hotel10)
-                                .addContainerGap(86, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(continueButton)
+                                .addContainerGap(45, Short.MAX_VALUE))
         );
+
 
         pack();
     }// </editor-fold>                        
@@ -143,6 +186,28 @@ public class Reservar extends javax.swing.JFrame {
         System.exit(0);
     }
 
+    private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        selectedHotel = getSelectedButtonText(hotelSelection);
+
+        if(selectedHotel == null){
+            errorText.setVisible(true);
+            return;
+        }
+
+        errorText.setVisible(false);
+    }
+
+    public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JRadioButton hotel1;
@@ -158,5 +223,7 @@ public class Reservar extends javax.swing.JFrame {
     private javax.swing.ButtonGroup hotelSelection;
     private javax.swing.JButton salirButton;
     private javax.swing.JButton volverButton;
+    private javax.swing.JButton continueButton;
+    private javax.swing.JLabel errorText;
     // End of variables declaration                   
 }
