@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class FuncionesEmpleados {
-    public static void mostrarReservasTodas(Connection BD, String hotel){
+    public static ArrayList<ArrayList<String>> mostrarReservasTodas(Connection BD, String hotel){
+        ArrayList<String> fila = new ArrayList<>();
+        ArrayList<ArrayList<String>> tabla = new ArrayList<>();
         try {
             Statement statement = BD.createStatement();
             System.out.println("Reservas registradas para el hotel " + hotel +":");
@@ -23,21 +26,30 @@ public class FuncionesEmpleados {
                 resultSet = statement.executeQuery(sqlQuery);
                 while (resultSet.next()) {
                     if(resultSet.getString("Hotel").equals(hotel)) {
+                        fila.clear();
                         int id = resultSet.getInt("ID");
+                        String IDS = Integer.toString(id);
                         String FechaI = resultSet.getString("FechaInicio");
                         String FechaF = resultSet.getString("FechaFin");
                         String Hotel = resultSet.getString("Hotel");
                         int personas = resultSet.getInt("Personas");
+                        String personasS = Integer.toString(personas);
+                        fila.add(IDS);
+                        fila.add(FechaI);
+                        fila.add(FechaF);
+                        fila.add(Hotel);
+                        fila.add(personasS);
+                        tabla.add(fila);
                         System.out.println("ID: " + id + "  Fecha de inicio de reserva: " + FechaI + "  Fecha de fin de reserva: "+FechaF+" Hotel: " + Hotel+" Num de personas: "+personas);
                     }
                 }
             }
             else {
-                System.out.println("La tabla reservas esta vacia");
+                System.out.println("La tabla de reservas de este hotel esta vacia");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        return tabla;
     }
 }
