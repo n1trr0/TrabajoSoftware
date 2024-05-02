@@ -32,6 +32,12 @@ public class PerfilTrabajador extends javax.swing.JFrame {
         salirButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         salirButton.setText("X");
 
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
+        });
+
         volverButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         volverButton.setText("<");
         volverButton.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +100,9 @@ public class PerfilTrabajador extends javax.swing.JFrame {
         this.setVisible(false);
         ventanaPrincipal.setVisible(true);
         ventanaPrincipal.updateVentana();
+    }
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        System.exit(0);
     }
 
     private void verReservaButtonActionPerformed(java.awt.event.ActionEvent evt) {

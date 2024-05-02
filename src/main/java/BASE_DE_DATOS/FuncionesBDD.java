@@ -28,7 +28,7 @@ public class FuncionesBDD {
                 nombreHotel=object.getString("name");
                 idHotel=object.getString("hotelId");
                 ciudad=object.getString("iataCode");
-                nombreHotel=nombreHotel.replace("AC BY MARRIOTT"," ");
+                nombreHotel=nombreHotel.replace("AC BY MARRIOTT ","");
                 intsertBD(conectarBD());
                 desconexion(conectarBD());
             }
