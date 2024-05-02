@@ -143,24 +143,27 @@ public class Login extends javax.swing.JFrame {
         char[] contraAux = passwordUsuario.getPassword();
         String contraS = new String(contraAux);
         java.util.Arrays.fill(contraAux, ' ');
+        if(Variables.logged){
+            errorText.setForeground(new java.awt.Color(255, 0, 0));
+            errorText.setText("Cierra sesion primero");
+            errorText.setVisible(true);
+            return;
+        }
         if (correoS.isEmpty()) {
             errorText.setText("Rellena el campo del correo para continuar");
             errorText.setVisible(true);
-
             return;
         }
 
         if (contraS.isEmpty()) {
             errorText.setText("Rellena el campo de la contraseña para continuar");
             errorText.setVisible(true);
-
             return;
         }
 
         if (!comprobacionFormatoCorreo(correoS)) {
             errorText.setText("El correo no tiene un formato valido");
             errorText.setVisible(true);
-
             return;
         }
 
@@ -168,7 +171,9 @@ public class Login extends javax.swing.JFrame {
 
         if (BuscarUsuario(BD, correoS, contraS)) {
             errorText.setVisible(false);
-            JOptionPane.showMessageDialog(null, "Los datos introducidos son correctos", "Información", JOptionPane.INFORMATION_MESSAGE);
+            errorText.setForeground(new java.awt.Color(0, 0, 0));
+            errorText.setText("Inicio de sesion correcto");
+            errorText.setVisible(true);
             Variables.logged = true;
             Variables.usuario = correoS;
             Variables.password = contraS;
