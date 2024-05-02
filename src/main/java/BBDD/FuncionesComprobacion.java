@@ -56,14 +56,14 @@ public class FuncionesComprobacion {
     }
 
     public static boolean comprobacionFormatoFecha(String fecha){
-        if (fecha.length() < 11) {
+        if (fecha.length() >10) {
             return false; // La fecha no tiene el formato esperado
         }
 
         String fechaC = "";
         char L;
         for(int i = 0; i < 4; i++) {
-            L = fecha.charAt(7 + i);
+            L = fecha.charAt(6 + i);
             fechaC = fechaC + L;
         }
         int fechaCC = Integer.parseInt(fechaC);
