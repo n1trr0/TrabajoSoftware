@@ -16,7 +16,7 @@ public class VerReservas extends javax.swing.JFrame {
     private javax.swing.JButton salirButton;
     private javax.swing.JButton volverButton;
     private javax.swing.JTable tabla;
-    private javax.swing.JScrollBar scrollBar;//
+    private javax.swing.JScrollPane scrollBar;//
 
     public VerReservas(PerfilTrabajador parent) {
         this.ventanaPerfil = parent;
@@ -40,7 +40,7 @@ public class VerReservas extends javax.swing.JFrame {
         tabla = new javax.swing.JTable(); // Aquí inicializamos la variable de instancia tabla
         tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        //scrollBar = new javax.swing.JScrollBar();
+        scrollBar = new javax.swing.JScrollPane(tabla); // Agregar la tabla al JScrollPane
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -53,7 +53,6 @@ public class VerReservas extends javax.swing.JFrame {
             }
         });
 
-        //scrollBar.setEnabled(true);
         volverButton.setFont(new java.awt.Font("Segoe UI", 1, 14));
         volverButton.setText("<");
         volverButton.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +73,7 @@ public class VerReservas extends javax.swing.JFrame {
 
         tabla.setModel(tableModel); // Aquí asignamos el modelo de tabla a la tabla
         editarcolumnas();
-        //tabla.add(scrollBar);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,8 +82,7 @@ public class VerReservas extends javax.swing.JFrame {
                                 .addComponent(volverButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
                                 .addComponent(salirButton))
-                        .addComponent(tabla, GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)//
-
+                        .addComponent(scrollBar) // Agregar el JScrollPane en lugar de la tabla directamente
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,7 +91,7 @@ public class VerReservas extends javax.swing.JFrame {
                                         .addComponent(salirButton)
                                         .addComponent(volverButton))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tabla, GroupLayout.PREFERRED_SIZE, 398, Short.MAX_VALUE)//
+                                .addComponent(scrollBar, GroupLayout.PREFERRED_SIZE, 398, Short.MAX_VALUE)//
                                 .addContainerGap())
         );
 
@@ -117,11 +115,11 @@ public class VerReservas extends javax.swing.JFrame {
     }
     private void editarcolumnas(){
         TableColumnModel columnModel=tabla.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(20);
-        columnModel.getColumn(1).setPreferredWidth(20);
-        columnModel.getColumn(2).setPreferredWidth(50);
-        columnModel.getColumn(3).setPreferredWidth(50);
-        columnModel.getColumn(4).setPreferredWidth(100);
-        columnModel.getColumn(5).setPreferredWidth(50);
+        columnModel.getColumn(0).setPreferredWidth(50);
+        columnModel.getColumn(1).setPreferredWidth(50);
+        columnModel.getColumn(2).setPreferredWidth(100);
+        columnModel.getColumn(3).setPreferredWidth(100);
+        columnModel.getColumn(4).setPreferredWidth(140);
+        columnModel.getColumn(5).setPreferredWidth(90);
     }
 }
