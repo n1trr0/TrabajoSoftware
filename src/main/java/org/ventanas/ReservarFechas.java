@@ -166,26 +166,31 @@ public class ReservarFechas extends javax.swing.JFrame {
         System.out.println("Fecha IN:"+fechaInicio.getText());
         System.out.println("Fecha OUT:"+fechaFin.getText());
         if(fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty()){
+            errorText.setVisible(false);
             errorText.setText("Rellena los campos de las fechas para continuar");
             errorText.setVisible(true);
             return;
         }
         if(!Variables.logged){
+            errorText.setVisible(false);
             errorText.setText("Necesitar tener un inicio de sesion activo");
             errorText.setVisible(true);
             return;
         }
-        if(FuncionesComprobacion.comprobacionFormatoFecha(fechaInicio.getText())){
-            errorText.setText("Fecha de inicio debe de ser >2024");
+        if(!FuncionesComprobacion.comprobacionFormatoFecha(fechaInicio.getText())){
+            errorText.setVisible(false);
+            errorText.setText("Fecha de inicio debe de ser mayor o igual a 2024");
             errorText.setVisible(true);
             return;
         }
-        if(FuncionesComprobacion.comprobacionFormatoFecha(fechaFin.getText())){
-            errorText.setText("Fecha de fin debe de ser >2024");
+        if(!FuncionesComprobacion.comprobacionFormatoFecha(fechaFin.getText())){
+            errorText.setVisible(false);
+            errorText.setText("Fecha de fin debe de ser mayor o igual a 2024");
             errorText.setVisible(true);
             return;
         }
         if(FuncionesComprobacion.comprobacionValidezFechas(fechaInicio.getText(), fechaFin.getText())){
+            errorText.setVisible(false);
             errorText.setText("La fecha final no puede ser anterior a la inicial");
             errorText.setVisible(true);
             return;
