@@ -97,6 +97,51 @@ public class FuncionesReserva {
         return compr2;
     }
 
+    public static boolean TieneReservaEnHotel(Connection BD,String correo, String telef, String contra,String hotel){
+        boolean compr2 = false;
+        if(BuscarUsuario(BD,correo,contra)) {
+            try {
+                Statement statement = BD.createStatement();
+
+                int id = conseguirID(BD,correo,telef,contra);
+
+                //comprobar si esta vacio
+                ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS count FROM reservas");
+                int count = 0;
+                if (resultSet.next()) {
+                    count = resultSet.getInt("count");
+                }
+                String nombre = ConseguirNombre(BD,correo,telef,contra);
+                if (count != 0) {
+
+                    //comprobamos las reservas
+                    String sqlQuery = "SELECT * FROM reservas";
+                    resultSet = statement.executeQuery(sqlQuery);
+                    while (resultSet.next()) {
+                        int idUsuario = resultSet.getInt("IDusuario");
+                        if (idUsuario == id) {
+                            if(resultSet.getString("Hotel").equals(hotel)) {
+                                System.out.println("El usuario "+nombre+" ya tiene una reserva planificada en esta fecha y en este hotel");
+                                compr2 = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!compr2) {
+                        System.out.println("El usuario "+nombre+" no tiene ninguna reserva planificada en esta fecha y en este hotel");
+                    }
+                }
+                if (!compr2) {
+                    System.out.println("El usuario "+nombre+" no tiene ninguna reserva planificada en esta fecha y en este hotel");
+                }
+                return compr2;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return compr2;
+    }
+
     public static void crearReservas(Connection BD,String correo, String telef, String contra,String hotel,String fechaI,String fechaF,int personas){
         if(BuscarUsuario(BD,correo,contra)){
             try{

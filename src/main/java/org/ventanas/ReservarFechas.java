@@ -163,6 +163,7 @@ public class ReservarFechas extends javax.swing.JFrame {
     }
 
     private void reservarActionPerformed(java.awt.event.ActionEvent evt) {
+        errorText.setForeground(new java.awt.Color(255, 0, 0));
         System.out.println("Fecha IN:"+fechaInicio.getText());
         System.out.println("Fecha OUT:"+fechaFin.getText());
         if(fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty()){
@@ -195,8 +196,18 @@ public class ReservarFechas extends javax.swing.JFrame {
             errorText.setVisible(true);
             return;
         }
-        errorText.setVisible(false);
         Connection BD = conectarBD();
+        if(TieneReservaEnHotel(BD,Variables.usuario,Variables.telefono,Variables.password,Variables.hotel)){
+            errorText.setVisible(false);
+            errorText.setText("Ya tiene una reserva hecha en este hotel");
+            errorText.setVisible(true);
+            desconexion(BD);
+            return;
+        }
+        errorText.setVisible(false);
+        errorText.setForeground(new java.awt.Color(0, 0, 0));
+        errorText.setText("Reserva realizada con exito en el hotel "+Variables.hotel);
+        errorText.setVisible(true);
         crearReservas(BD,Variables.usuario,Variables.telefono,Variables.password,Variables.hotel,fechaInicio.getText(),fechaFin.getText(),numPersonas.getValue());
         desconexion(BD);
     }
