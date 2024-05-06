@@ -1,14 +1,20 @@
 package org.ventanas;
 
+import Data.Variables;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import java.awt.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
+import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
 import static BBDD.FuncionesEmpleados.mostrarReservasTodas;
+import static BBDD.FuncionesGerente.conseguirID;
+import static BBDD.FuncionesGerente.conseguirLugarTrabajo;
 
 public class VerReservas extends javax.swing.JFrame {
 
@@ -17,6 +23,7 @@ public class VerReservas extends javax.swing.JFrame {
     private javax.swing.JButton volverButton;
     private javax.swing.JTable tabla;
     private javax.swing.JScrollPane scrollBar;//
+    private Connection  conexion;
 
     public VerReservas(PerfilTrabajador parent) {
         this.ventanaPerfil = parent;
@@ -60,8 +67,9 @@ public class VerReservas extends javax.swing.JFrame {
                 volverButtonActionPerformed(evt);
             }
         });
-
-        ArrayList<ArrayList<String>> datos = mostrarReservasTodas(conectarBD(),"HOTEL ATOCHA");
+        conexion=conectarBD();
+        ArrayList<ArrayList<String>> datos = mostrarReservasTodas(conexion,conseguirLugarTrabajo(conexion,conseguirID(conexion, Variables.usuario,Variables.telefono,Variables.password)));
+        desconexion(conexion);
         String[] columnas = {"IDReserva","IDUsuario", "FechaInicio", "FechaFin", "Hotel", "Personas"};
         DefaultTableModel tableModel = new DefaultTableModel(devolverarray(datos), columnas) {
             @Override
@@ -98,14 +106,12 @@ public class VerReservas extends javax.swing.JFrame {
         pack();
     }
     private Object[][]devolverarray(ArrayList<ArrayList<String>>hoteles){
-        Object[][] arrayBidimensional = new Object[hoteles.size() + 1][]; // Incrementa en 1 para incluir el nuevo dato
+        Object[][] arrayBidimensional = new Object[hoteles.size() ][]; // Incrementa en 1 para incluir el nuevo dato
 
-        Object[] nuevoDato = {"IDReserva","ID", "FechaInicio", "FechaFin", "Hotel", "Personas"};
-        arrayBidimensional[0] = nuevoDato;
 
         for (int i = 0; i < hoteles.size(); i++) { // Itera solo hasta hoteles.size()
             ArrayList<String> lista = hoteles.get(i);
-            arrayBidimensional[i + 1] = lista.toArray(new Object[0]); // Incrementa el índice en 1 para dejar espacio para el nuevo dato
+            arrayBidimensional[i] = lista.toArray(new Object[0]); // Incrementa el índice en 1 para dejar espacio para el nuevo dato
         }
         return arrayBidimensional;
     }
