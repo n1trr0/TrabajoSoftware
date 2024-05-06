@@ -100,17 +100,37 @@ public class FuncionesGerente {
         return id;
     }
 
+    public static String conseguirLugarTrabajo(Connection BD, int id){
+        String hotel="";
+        try{
+            Statement statement = BD.createStatement();
+            String sqlQuery = "SELECT * FROM empleados";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()){
+                if(resultSet.getInt("ID")==id){
+                    hotel = resultSet.getString("LugarTrabajo");
+                    break;
+                }
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return hotel;
+    }
+
     public static void introducirEmpleadodeUsuarios(Connection BD,String correo, String telef, String contra, String hotel){
         if(BuscarUsuario(BD,correo,contra)){
-            int id = conseguirID(BD,correo,telef,contra);
-            try{
-                Statement statement = BD.createStatement();
-                String SQLQuery = "INSERT INTO empleados (ID,LugarTrabajo,EsGerente) Values('"+id+"','"+hotel+"','0')";
-                statement.executeUpdate(SQLQuery);
-                System.out.println("Empleado añadido en el hotel "+hotel);
-                cambiarNivel(BD,correo,telef,contra,1);
-            }catch (SQLException e){
-                throw new RuntimeException(e);
+            int id= conseguirID(BD,correo,telef,contra);
+            if(!buscarEmpleado(BD,id,hotel)) {
+                try {
+                    Statement statement = BD.createStatement();
+                    String SQLQuery = "INSERT INTO empleados (ID,LugarTrabajo,EsGerente) Values('" + id + "','" + hotel + "','0')";
+                    statement.executeUpdate(SQLQuery);
+                    System.out.println("Empleado añadido en el hotel " + hotel);
+                    cambiarNivel(BD, correo, telef, contra, 1);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
