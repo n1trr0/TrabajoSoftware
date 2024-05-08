@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static BBDD.FuncionesComprobacion.comprobacionFormatoFecha;
@@ -49,6 +50,50 @@ public class FuncionesReserva {
             }
         }
         return compr;
+    }
+
+    public static ArrayList<ArrayList<String>> MostrarReservasdeUsuarioArrayList(Connection BD, String correo, String telef, String contra){
+        ArrayList<ArrayList<String>> tabla = new ArrayList<>();
+        try {
+            Statement statement = BD.createStatement();
+            String nombre = ConseguirNombre(BD,correo,telef,contra);
+            System.out.println("Reservas registradas para el usuario " + nombre +":");
+
+            //comprobar si esta vacio
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS count FROM reservas");
+            int count = 0;
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+            if (count != 0) {
+                //comprobamos las reservas
+                String sqlQuery = "SELECT * FROM reservas";
+                resultSet = statement.executeQuery(sqlQuery);
+                int idU = conseguirID(BD,correo,telef,contra);
+                while (resultSet.next()) {
+                    if(resultSet.getInt("IDusuario")==idU) {
+                        ArrayList<String> fila = new ArrayList<>();
+                        String FechaI = resultSet.getString("FechaInicio");
+                        String FechaF = resultSet.getString("FechaFin");
+                        String Hotel = resultSet.getString("Hotel");
+                        int personas = resultSet.getInt("Personas");
+                        String personasS = Integer.toString(personas);
+                        fila.add(FechaI);
+                        fila.add(FechaF);
+                        fila.add(Hotel);
+                        fila.add(personasS);
+                        tabla.add(fila);
+                        System.out.println("ID: " + idU + "  Fecha de inicio de reserva: " + FechaI + "  Fecha de fin de reserva: "+FechaF+" Hotel: " + Hotel+" Num de personas: "+personas);
+                    }
+                }
+            }
+            else {
+                System.out.println("La tabla de reservas de este usuario esta vacia");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla;
     }
 
     //Comprueba
