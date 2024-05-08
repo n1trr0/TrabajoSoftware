@@ -1,16 +1,13 @@
 package org.ventanas;
 
-import java.sql.Connection;
-
 import javax.swing.*;
 
-import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
-import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
-import static BBDD.FuncionesComprobacion.*;
-import static BBDD.FuncionesUsuario.RegistrarUsuario;
+import static Funciones_BBDD.FuncionesComprobacion.*;
+import static Data.FuncionesEnlace.*;
 
 public class Register extends javax.swing.JFrame {
     private JFrame ventanaPrincipal;
+
     /**
      * Creates new form Register
      */
@@ -63,9 +60,8 @@ public class Register extends javax.swing.JFrame {
         correoText.setText("Correo:");
 
 
-
         registrarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt){
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registrarButtonActionPerformed(evt);
             }
         });
@@ -163,10 +159,10 @@ public class Register extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
+        salirPrograma();
     }
 
-    private void registrarButtonActionPerformed(java.awt.event.ActionEvent evt){
+    private void registrarButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String correoS = correo.getText();
         char[] contraAux = password.getPassword();
         String contraS = new String(contraAux);
@@ -174,43 +170,45 @@ public class Register extends javax.swing.JFrame {
         String nombreS = nombre.getText();
         String apellidoS = apellido.getText();
         String telefonoS = telefono.getText();
-        if(correoS.isEmpty() && contraS.isEmpty() && nombreS.isEmpty() && apellidoS.isEmpty() && telefonoS.isEmpty()){
+        if (correoS.isEmpty() && contraS.isEmpty() && nombreS.isEmpty() && apellidoS.isEmpty() && telefonoS.isEmpty()) {
             errorText.setText("Por favor, rellene todos los campos para continuar");
             errorText.setVisible(true);
             return;
         }
-        if(!comprobacionFormatoCorreo(correoS)){
+        if (!comprobacionFormatoCorreo(correoS)) {
             errorText.setText("El correo no tiene un formato valido");
             errorText.setVisible(true);
             return;
         }
-        if(!comprobacionFormatoTelef(telefonoS)){
+        if (!comprobacionFormatoTelef(telefonoS)) {
             errorText.setText("El telefono no tiene un formato valido");
             errorText.setVisible(true);
             return;
         }
-        Connection BD = (Connection) conectarBD();
-        if(!comprobacionDisponibilidadCorreo((java.sql.Connection) BD,correoS)){
-            desconexion((java.sql.Connection) BD);
+        if (!comprobacionDisponibilidadDeCorreoUsuario(correoS)) {
             errorText.setText("El correo no esta disponible para registrarlo");
             errorText.setVisible(true);
             return;
         }
-        if(comprobacionDisponibilidadTelefono((java.sql.Connection) BD,telefonoS)){
-            RegistrarUsuario((java.sql.Connection) BD,nombreS,apellidoS,correoS,telefonoS,contraS);
-            desconexion((java.sql.Connection) BD);
-            errorText.setVisible(false);
-            JOptionPane.showMessageDialog(null, "El registro es exitoso, ya puede logearse :)", "Información", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            desconexion((java.sql.Connection) BD);
+        if (!comprobacionDisponibilidadDeTelefonoUsuario(telefonoS)) {
             errorText.setText("El telefono no esta disponible para registrarlo");
             errorText.setVisible(true);
+            return;
+
         }
+        registrarUnUsuario(nombreS, apellidoS, correoS, telefonoS, contraS);
+        errorText.setVisible(false);
+        JOptionPane.showMessageDialog(null, "El registro es exitoso, ya puede logearse :)", "Información", JOptionPane.INFORMATION_MESSAGE);
+        volverVentanaAnterior();
     }
 
 
-
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        this.setVisible(false);
+        ventanaPrincipal.setVisible(true);
+    }
+
+    private void volverVentanaAnterior() {
         this.setVisible(false);
         ventanaPrincipal.setVisible(true);
     }

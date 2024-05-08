@@ -1,8 +1,12 @@
 package org.ventanas;
+
 import Data.Variables;
+
+import static Data.FuncionesEnlace.*;
 
 public class PerfilTrabajador extends javax.swing.JFrame {
     private Ventana ventanaPrincipal;
+
     /**
      * Creates new form Perfil
      */
@@ -101,8 +105,9 @@ public class PerfilTrabajador extends javax.swing.JFrame {
         ventanaPrincipal.setVisible(true);
         ventanaPrincipal.updateVentana();
     }
+
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
+        salirPrograma();
     }
 
     private void verReservaButtonActionPerformed(java.awt.event.ActionEvent evt) {

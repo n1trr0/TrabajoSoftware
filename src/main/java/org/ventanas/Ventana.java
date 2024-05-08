@@ -1,6 +1,10 @@
 package org.ventanas;
+
 import Data.Variables;
-public class Ventana extends javax.swing.JFrame  {
+
+import static Data.FuncionesEnlace.*;
+
+public class Ventana extends javax.swing.JFrame {
     /**
      * Creates new form Ventana
      */
@@ -107,7 +111,7 @@ public class Ventana extends javax.swing.JFrame  {
     }
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
+        salirPrograma();
     }
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,20 +127,22 @@ public class Ventana extends javax.swing.JFrame  {
     }
 
     private void perfilButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        if (Variables.nivel == 0){
+        if (Variables.nivel == 0) {
             PerfilUser perfilUser = new PerfilUser(this);
             perfilUser.setVisible(true);
             this.setVisible(false);
         }
-        if (Variables.nivel == 1){
+        if (Variables.nivel == 1) {
             PerfilTrabajador perfilTrabajador = new PerfilTrabajador(this);
             perfilTrabajador.setVisible(true);
             this.setVisible(false);
         }
+       /* if (Variables.nivel == 2){
 
+        }*/
     }
 
-    public void updateVentana(){
+    public void updateVentana() {
         perfilButton.setVisible(Variables.logged);
     }
 

@@ -1,16 +1,14 @@
-package BBDD;
+package Funciones_BBDD;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static BBDD.FuncionesComprobacion.comprobacionFormatoCorreo;
-import static BBDD.FuncionesComprobacion.comprobacionFormatoTelef;
-import static BBDD.FuncionesUsuario.*;
+import static Funciones_BBDD.FuncionesUsuario.*;
 
 public class FuncionesGerente {
-    public static void ConsultarUsuarios(Connection BD){
+    public static void ConsultarUsuarios(Connection BD) {
         // Crear una declaración SQL,tiene que estar dentro de un try catch
         try {
             //creo un statement
@@ -19,10 +17,9 @@ public class FuncionesGerente {
             String sqlQuery = "SELECT * FROM usuarios";//puedo poner columnas individuales tambien
             ResultSet resultSet = statement.executeQuery(sqlQuery);
 
-            if(!resultSet.next()){
+            if (!resultSet.next()) {
                 System.out.println("La tabla usuarios esta vacía");
-            }
-            else {
+            } else {
                 resultSet.close();
                 resultSet = statement.executeQuery(sqlQuery);
                 // Procesar los resultados de la consulta
@@ -41,87 +38,87 @@ public class FuncionesGerente {
         }
     }
 
-    public static void cambiarNivel(Connection BD,String correo, String telef, String contra,int nivel){
+    public static void cambiarNivel(Connection BD, String correo, String telef, String contra, int nivel) {
         try {
-            int id = conseguirID(BD,correo,telef,contra);
+            int id = conseguirID(BD, correo, telef, contra);
             Statement statement = BD.createStatement();
-            String SQLQuery = "UPDATE Usuarios SET Nivel = '"+nivel+"' WHERE ID = '"+id+"';";
+            String SQLQuery = "UPDATE Usuarios SET Nivel = '" + nivel + "' WHERE ID = '" + id + "';";
             statement.executeUpdate(SQLQuery);
             System.out.println("Nivel cambiado");
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void cambiarNivelConId(Connection BD,int id,int nivel){
+    public static void cambiarNivelConId(Connection BD, int id, int nivel) {
         try {
             Statement statement = BD.createStatement();
-            String SQLQuery = "UPDATE Usuarios SET Nivel = '"+nivel+"' WHERE ID = '"+id+"';";
+            String SQLQuery = "UPDATE Usuarios SET Nivel = '" + nivel + "' WHERE ID = '" + id + "';";
             statement.executeUpdate(SQLQuery);
             System.out.println("Nivel cambiado");
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static int conseguirNivel(Connection BD,String correo, String contra){
-        int nivel=0;
-        try{
+    public static int conseguirNivel(Connection BD, String correo, String contra) {
+        int nivel = 0;
+        try {
             Statement statement = BD.createStatement();
             String sqlQuery = "SELECT * FROM usuarios";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()){
-                if(resultSet.getString("Correo").equals(correo) && resultSet.getString("Contraseña").equals(contra)){
+            while (resultSet.next()) {
+                if (resultSet.getString("Correo").equals(correo) && resultSet.getString("Contraseña").equals(contra)) {
                     nivel = resultSet.getInt("Nivel");
                     break;
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return nivel;
     }
 
-    public static int conseguirID(Connection BD,String correo, String telef, String contra){
-        int id=0;
-        try{
+    public static int conseguirID(Connection BD, String correo, String telef, String contra) {
+        int id = 0;
+        try {
             Statement statement = BD.createStatement();
             String sqlQuery = "SELECT * FROM usuarios";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()){
-                if(resultSet.getString("Correo").equals(correo) && resultSet.getString("Contraseña").equals(contra) && resultSet.getString("Telefono").equals(telef)){
+            while (resultSet.next()) {
+                if (resultSet.getString("Correo").equals(correo) && resultSet.getString("Contraseña").equals(contra) && resultSet.getString("Telefono").equals(telef)) {
                     id = resultSet.getInt("ID");
                     break;
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return id;
     }
 
-    public static String conseguirLugarTrabajo(Connection BD, int id){
-        String hotel="";
-        try{
+    public static String conseguirLugarTrabajo(Connection BD, int id) {
+        String hotel = "";
+        try {
             Statement statement = BD.createStatement();
             String sqlQuery = "SELECT * FROM empleados";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()){
-                if(resultSet.getInt("ID")==id){
+            while (resultSet.next()) {
+                if (resultSet.getInt("ID") == id) {
                     hotel = resultSet.getString("LugarTrabajo");
                     break;
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return hotel;
     }
 
-    public static void introducirEmpleadodeUsuarios(Connection BD,String correo, String telef, String contra, String hotel){
-        if(BuscarUsuario(BD,correo,contra)){
-            int id= conseguirID(BD,correo,telef,contra);
-            if(!buscarEmpleado(BD,id,hotel)) {
+    public static void introducirEmpleadodeUsuarios(Connection BD, String correo, String telef, String contra, String hotel) {
+        if (BuscarUsuario(BD, correo, contra)) {
+            int id = conseguirID(BD, correo, telef, contra);
+            if (!buscarEmpleado(BD, id, hotel)) {
                 try {
                     Statement statement = BD.createStatement();
                     String SQLQuery = "INSERT INTO empleados (ID,LugarTrabajo,EsGerente) Values('" + id + "','" + hotel + "','0')";
@@ -135,21 +132,20 @@ public class FuncionesGerente {
         }
     }
 
-    public static void introducirEmpleadoDirectamente(Connection BD,String nombre,String apellido,String correo,String telef,String contra,String hotel) {
-        RegistrarUsuario(BD,nombre,apellido,correo,telef,contra);
-        introducirEmpleadodeUsuarios(BD,correo,telef,contra,hotel);
+    public static void introducirEmpleadoDirectamente(Connection BD, String nombre, String apellido, String correo, String telef, String contra, String hotel) {
+        RegistrarUsuario(BD, nombre, apellido, correo, telef, contra);
+        introducirEmpleadodeUsuarios(BD, correo, telef, contra, hotel);
     }
 
-    public static boolean buscarEmpleado(Connection BD,int id,String hotel){
-        try{
-            boolean compr=false;
+    public static boolean buscarEmpleado(Connection BD, int id, String hotel) {
+        try {
+            boolean compr = false;
             Statement statement = BD.createStatement();
             String sqlQuery = "SELECT * FROM empleados";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-            if(!resultSet.next()){
+            if (!resultSet.next()) {
                 System.out.println("La tabla empleados esta vacía");
-            }
-            else {
+            } else {
                 resultSet.close();
                 resultSet = statement.executeQuery(sqlQuery);
                 while (resultSet.next()) {
@@ -165,26 +161,25 @@ public class FuncionesGerente {
                 }
             }
             return compr;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void consultarEmpleados(Connection BD,String hotel){
+    public static void consultarEmpleados(Connection BD, String hotel) {
         try {
             Statement statement = BD.createStatement();
             String sqlQuery = "SELECT * FROM empleados";//puedo poner columnas individuales tambien
             ResultSet resultSet = statement.executeQuery(sqlQuery);
 
-            if(!resultSet.next()){
+            if (!resultSet.next()) {
                 System.out.println("La tabla empleados esta vacía");
-            }
-            else {
+            } else {
                 resultSet.close();
                 resultSet = statement.executeQuery(sqlQuery);
                 System.out.println("Datos de la tabla empleados:");
                 while (resultSet.next()) {//este comando pasa de fila hasta que no haya mas filas
-                    if(resultSet.getString("LugarTrabajo").equals(hotel)) {
+                    if (resultSet.getString("LugarTrabajo").equals(hotel)) {
                         int id = resultSet.getInt("ID");//se pone el nombre de la columna
                         String hotel2 = resultSet.getString("LugarTrabajo");
                         String gerente;
@@ -203,25 +198,25 @@ public class FuncionesGerente {
         }
     }
 
-    public static void eliminarEmpleado(Connection BD,int id, String hotel) {
+    public static void eliminarEmpleado(Connection BD, int id, String hotel) {
         if (buscarEmpleado(BD, id, hotel)) {
             String nombre = ConseguirNombreConId(BD, id);
             try {
                 Statement statement = BD.createStatement();
-                cambiarNivelConId(BD,id,0);
+                cambiarNivelConId(BD, id, 0);
                 String elimBD = "DELETE FROM empleados WHERE ID='" + id + "' AND LugarTrabajo='" + hotel + "'";//los strings se ponen entre comillas simples
-                System.out.println("El empleado " + nombre + " ha sido despedido del hotel "+hotel);
+                System.out.println("El empleado " + nombre + " ha sido despedido del hotel " + hotel);
                 statement.executeUpdate(elimBD);
 
-            }catch(SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
         }
     }
 
-    public static void eliminarEmpleadoYusuario(Connection BD,int id, String hotel){
-        eliminarEmpleado(BD,id,hotel);
-        EliminarUsuarioConId(BD,id);
+    public static void eliminarEmpleadoYusuario(Connection BD, int id, String hotel) {
+        eliminarEmpleado(BD, id, hotel);
+        EliminarUsuarioConId(BD, id);
     }
 }

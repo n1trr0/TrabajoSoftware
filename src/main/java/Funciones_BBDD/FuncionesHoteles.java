@@ -1,4 +1,4 @@
-package BBDD;
+package Funciones_BBDD;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,8 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class FuncionesHoteles {
-
-    public static ArrayList<String> conseguirNombreHoteles(Connection BD){
+    public static ArrayList<String> conseguirNombreHoteles(Connection BD) {
         ArrayList<String> Hoteles = new ArrayList<>();
         try {
             //creo un statement
@@ -17,10 +16,9 @@ public class FuncionesHoteles {
             String sqlQuery = "SELECT * FROM hoteles";//puedo poner columnas individuales tambien
             ResultSet resultSet = statement.executeQuery(sqlQuery);
 
-            if(!resultSet.next()){
+            if (!resultSet.next()) {
                 System.out.println("La tabla hoteles esta vacía");
-            }
-            else {
+            } else {
                 resultSet.close();
                 resultSet = statement.executeQuery(sqlQuery);
                 // Procesar los resultados de la consulta

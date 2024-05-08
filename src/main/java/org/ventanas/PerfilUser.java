@@ -1,8 +1,12 @@
 package org.ventanas;
+
 import Data.Variables;
+
+import static Data.FuncionesEnlace.*;
 
 public class PerfilUser extends javax.swing.JFrame {
     private Ventana ventanaPrincipal;
+
     /**
      * Creates new form Perfil
      */
@@ -32,8 +36,10 @@ public class PerfilUser extends javax.swing.JFrame {
         salirButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         salirButton.setText("X");
 
-        salirButton.addActionListener(new java.awt.event.ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent evt){ salirButtonActionPerformed(evt);}
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
         });
 
         volverButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -101,7 +107,7 @@ public class PerfilUser extends javax.swing.JFrame {
     }
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
+        salirPrograma();
     }
 
     private void gestionarButtonActionPerformed(java.awt.event.ActionEvent evt) {

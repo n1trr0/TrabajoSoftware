@@ -6,15 +6,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import java.awt.*;
-import java.sql.Connection;
 import java.util.ArrayList;
 
-import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
-import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
-import static BBDD.FuncionesEmpleados.mostrarReservasTodas;
-import static BBDD.FuncionesGerente.conseguirID;
-import static BBDD.FuncionesGerente.conseguirLugarTrabajo;
+import static Data.FuncionesEnlace.*;
 
 public class VerReservas extends javax.swing.JFrame {
 
@@ -23,7 +17,6 @@ public class VerReservas extends javax.swing.JFrame {
     private javax.swing.JButton volverButton;
     private javax.swing.JTable tabla;
     private javax.swing.JScrollPane scrollBar;//
-    private Connection  conexion;
 
     public VerReservas(PerfilTrabajador parent) {
         this.ventanaPerfil = parent;
@@ -36,7 +29,7 @@ public class VerReservas extends javax.swing.JFrame {
     }
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
+        salirPrograma();
     }
 
     @SuppressWarnings("unchecked")
@@ -67,10 +60,8 @@ public class VerReservas extends javax.swing.JFrame {
                 volverButtonActionPerformed(evt);
             }
         });
-        conexion=conectarBD();
-        ArrayList<ArrayList<String>> datos = mostrarReservasTodas(conexion,conseguirLugarTrabajo(conexion,conseguirID(conexion, Variables.usuario,Variables.telefono,Variables.password)));
-        desconexion(conexion);
-        String[] columnas = {"IDReserva","IDUsuario", "FechaInicio", "FechaFin", "Hotel", "Personas"};
+        ArrayList<ArrayList<String>> datos = mostrarReservasDeHotelEnArraylist(Variables.usuario, Variables.telefono, Variables.password);
+        String[] columnas = {"IDReserva", "IDUsuario", "FechaInicio", "FechaFin", "Hotel", "Personas"};
         DefaultTableModel tableModel = new DefaultTableModel(devolverarray(datos), columnas) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -105,8 +96,9 @@ public class VerReservas extends javax.swing.JFrame {
 
         pack();
     }
-    private Object[][]devolverarray(ArrayList<ArrayList<String>>hoteles){
-        Object[][] arrayBidimensional = new Object[hoteles.size() ][]; // Incrementa en 1 para incluir el nuevo dato
+
+    private Object[][] devolverarray(ArrayList<ArrayList<String>> hoteles) {
+        Object[][] arrayBidimensional = new Object[hoteles.size()][]; // Incrementa en 1 para incluir el nuevo dato
 
 
         for (int i = 0; i < hoteles.size(); i++) { // Itera solo hasta hoteles.size()
@@ -115,12 +107,14 @@ public class VerReservas extends javax.swing.JFrame {
         }
         return arrayBidimensional;
     }
+
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         ventanaPerfil.setVisible(true);
     }
-    private void editarcolumnas(){
-        TableColumnModel columnModel=tabla.getColumnModel();
+
+    private void editarcolumnas() {
+        TableColumnModel columnModel = tabla.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(50);
         columnModel.getColumn(1).setPreferredWidth(50);
         columnModel.getColumn(2).setPreferredWidth(100);

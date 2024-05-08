@@ -1,4 +1,4 @@
-package BASE_DE_DATOS;
+package Conexion_BBDD;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,7 +19,7 @@ public class ConexionPrincipal {
         System.out.println("espere por favor...");
 
         try {
-            conexion= DriverManager.getConnection(host+BD,user,contrasena);
+            conexion = DriverManager.getConnection(host + BD, user, contrasena);
             System.out.println("Conexion exitosa");
         } catch (Exception e) {
             System.err.println("Error al conectarse al la BBDD: " + e.getMessage());
@@ -29,7 +29,7 @@ public class ConexionPrincipal {
         return conexion;
     }
 
-    public static void desconexion(Connection BD){
+    public static void desconexion(Connection BD) {
         try {
             BD.close();
             System.out.println("Conexion finalizada");

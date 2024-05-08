@@ -1,16 +1,9 @@
 package org.ventanas;
 
-import BBDD.FuncionesGerente;
-import BBDD.FuncionesUsuario;
 import Data.Variables;
 
-import javax.swing.*;
-import java.sql.Connection;
-
-import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
-import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
-import static BBDD.FuncionesUsuario.*;
-import static BBDD.FuncionesComprobacion.*;
+import static Funciones_BBDD.FuncionesComprobacion.*;
+import static Data.FuncionesEnlace.*;
 
 public class Login extends javax.swing.JFrame {
     private Ventana ventanaPrincipal;
@@ -50,12 +43,6 @@ public class Login extends javax.swing.JFrame {
         salirButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salirButtonActionPerformed(evt);
-            }
-        });
-
-        correo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                correoActionPerformed(evt);
             }
         });
 
@@ -131,11 +118,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
-    }
-
-    private void correoActionPerformed(java.awt.event.ActionEvent evt) {
-
+        salirPrograma();
     }
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +126,7 @@ public class Login extends javax.swing.JFrame {
         char[] contraAux = passwordUsuario.getPassword();
         String contraS = new String(contraAux);
         java.util.Arrays.fill(contraAux, ' ');
-        if(Variables.logged){
+        if (Variables.logged) {
             errorText.setForeground(new java.awt.Color(255, 0, 0));
             errorText.setText("Cierra sesion primero");
             errorText.setVisible(true);
@@ -167,9 +150,7 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
-        Connection BD = conectarBD();
-
-        if (BuscarUsuario(BD, correoS, contraS)) {
+        if (buscarUnUsuario(correoS, contraS)) {
             errorText.setVisible(false);
             errorText.setForeground(new java.awt.Color(0, 0, 0));
             errorText.setText("Inicio de sesion correcto");
@@ -177,18 +158,23 @@ public class Login extends javax.swing.JFrame {
             Variables.logged = true;
             Variables.usuario = correoS;
             Variables.password = contraS;
-            Variables.nivel = FuncionesGerente.conseguirNivel(BD, correoS, contraS);
-            Variables.telefono = FuncionesUsuario.ConseguirTelefono(BD, correoS, contraS);
-
+            Variables.nivel = conseguirUnNivelUsuario(correoS, contraS);
+            Variables.telefono = conseguirUnTelefonoUsuario(correoS, contraS);
+            volverVentanaAnterior();
         } else {
             errorText.setText("El correo o contraseña no son correctos");
             errorText.setVisible(true);
         }
 
-        desconexion(BD);
     }
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        this.setVisible(false);
+        ventanaPrincipal.setVisible(true);
+        ventanaPrincipal.updateVentana();
+    }
+
+    private void volverVentanaAnterior() {
         this.setVisible(false);
         ventanaPrincipal.setVisible(true);
         ventanaPrincipal.updateVentana();

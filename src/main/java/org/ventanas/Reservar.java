@@ -1,18 +1,14 @@
 package org.ventanas;
 
-import BBDD.FuncionesHoteles;
 import Data.Variables;
 
 import javax.swing.*;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
-import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
+import static Data.FuncionesEnlace.*;
 
 /**
- *
  * @author Raul
  */
 public class Reservar extends javax.swing.JFrame {
@@ -20,6 +16,7 @@ public class Reservar extends javax.swing.JFrame {
     private ArrayList<JRadioButton> buttons;
     private ArrayList<String> listaHoteles;
     private JFrame ventanaPrincipal;
+
     /**
      * Creates new form Reservar
      */
@@ -193,13 +190,13 @@ public class Reservar extends javax.swing.JFrame {
     }
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
+        salirPrograma();
     }
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {
         selectedHotel = getSelectedButtonText(hotelSelection);
 
-        if(selectedHotel == null){
+        if (selectedHotel == null) {
             errorText.setVisible(true);
             return;
         }
@@ -212,7 +209,7 @@ public class Reservar extends javax.swing.JFrame {
     }
 
     public String getSelectedButtonText(ButtonGroup buttonGroup) {
-        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements(); ) {
             AbstractButton button = buttons.nextElement();
 
             if (button.isSelected()) {
@@ -223,16 +220,15 @@ public class Reservar extends javax.swing.JFrame {
         return null;
     }
 
-    public void updateHotelButtons(){
-        Connection BD = (Connection) conectarBD();
-        listaHoteles = FuncionesHoteles.conseguirNombreHoteles(BD);
-        desconexion((java.sql.Connection) BD);
+    public void updateHotelButtons() {
+        listaHoteles = conseguirHotelesDeBBDD();
 
-        for(int i = 0; i< buttons.size(); i++){
+        for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setText(listaHoteles.get(i));
         }
     }
-    // Variables declaration - do not modify                     
+
+    // Variables declaration - do not modify
     private javax.swing.JRadioButton hotel1;
     private javax.swing.JRadioButton hotel10;
     private javax.swing.JRadioButton hotel2;

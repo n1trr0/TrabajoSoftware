@@ -1,22 +1,18 @@
 package org.ventanas;
 
-import BBDD.FuncionesComprobacion;
-import BBDD.FuncionesReserva;
 import Data.Variables;
 
 import javax.swing.*;
-import java.sql.Connection;
 
-import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
-import static BASE_DE_DATOS.ConexionPrincipal.desconexion;
-import static BBDD.FuncionesReserva.*;
+import static Funciones_BBDD.FuncionesComprobacion.*;
+import static Data.FuncionesEnlace.*;
 
 /**
- *
  * @author Raul
  */
 public class ReservarFechas extends javax.swing.JFrame {
     private JFrame ventanaReserva;
+
     /**
      * Creates new form ReservarFechas
      */
@@ -154,7 +150,7 @@ public class ReservarFechas extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
+        salirPrograma();
     }
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,53 +160,51 @@ public class ReservarFechas extends javax.swing.JFrame {
 
     private void reservarActionPerformed(java.awt.event.ActionEvent evt) {
         errorText.setForeground(new java.awt.Color(255, 0, 0));
-        System.out.println("Fecha IN:"+fechaInicio.getText());
-        System.out.println("Fecha OUT:"+fechaFin.getText());
-        if(fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty()){
+        System.out.println("Fecha IN:" + fechaInicio.getText());
+        System.out.println("Fecha OUT:" + fechaFin.getText());
+        if (fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty()) {
             errorText.setVisible(false);
             errorText.setText("Rellena los campos de las fechas para continuar");
             errorText.setVisible(true);
             return;
         }
-        if(!Variables.logged){
+        if (!Variables.logged) {
             errorText.setVisible(false);
             errorText.setText("Necesitar tener un inicio de sesion activo");
             errorText.setVisible(true);
             return;
         }
-        if(!FuncionesComprobacion.comprobacionFormatoFecha(fechaInicio.getText())){
+        if (!comprobacionFormatoFecha(fechaInicio.getText())) {
             errorText.setVisible(false);
             errorText.setText("Fecha de inicio debe de ser mayor o igual a 2024");
             errorText.setVisible(true);
             return;
         }
-        if(!FuncionesComprobacion.comprobacionFormatoFecha(fechaFin.getText())){
+        if (!comprobacionFormatoFecha(fechaFin.getText())) {
             errorText.setVisible(false);
             errorText.setText("Fecha de fin debe de ser mayor o igual a 2024");
             errorText.setVisible(true);
             return;
         }
-        if(FuncionesComprobacion.comprobacionValidezFechas(fechaInicio.getText(), fechaFin.getText())){
+        if (comprobacionValidezFechas(fechaInicio.getText(), fechaFin.getText())) {
             errorText.setVisible(false);
             errorText.setText("La fecha final no puede ser anterior a la inicial");
             errorText.setVisible(true);
             return;
         }
-        Connection BD = conectarBD();
-        if(TieneReservaEnHotel(BD,Variables.usuario,Variables.telefono,Variables.password,Variables.hotel)){
+        if (saberSiUsuarioTieneReservas()) {
             errorText.setVisible(false);
             errorText.setText("Ya tiene una reserva hecha en este hotel");
             errorText.setVisible(true);
-            desconexion(BD);
             return;
         }
         errorText.setVisible(false);
         errorText.setForeground(new java.awt.Color(0, 0, 0));
-        errorText.setText("Reserva realizada con exito en el hotel "+Variables.hotel);
+        errorText.setText("Reserva realizada con exito en el hotel " + Variables.hotel);
         errorText.setVisible(true);
-        crearReservas(BD,Variables.usuario,Variables.telefono,Variables.password,Variables.hotel,fechaInicio.getText(),fechaFin.getText(),numPersonas.getValue());
-        desconexion(BD);
+        creacionDeReservaDeUsuario(fechaInicio, fechaFin, numPersonas);
     }
+
     // Variables declaration - do not modify
     private javax.swing.JFormattedTextField fechaFin;
     private javax.swing.JLabel fechaFinText;

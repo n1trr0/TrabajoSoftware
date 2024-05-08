@@ -2,11 +2,9 @@ package org.ventanas;
 
 import Data.Variables;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 
-import static BASE_DE_DATOS.ConexionPrincipal.conectarBD;
-import static BBDD.FuncionesReserva.*;
+import static Data.FuncionesEnlace.*;
 
 public class GestionarReservas extends javax.swing.JFrame {
     private javax.swing.JButton EliminarButton;
@@ -25,23 +23,26 @@ public class GestionarReservas extends javax.swing.JFrame {
     private javax.swing.JTextField PersonasTextField;
 
     private static PerfilUser ventanauser;
-    private static Connection conexion;
+
     /**
      * Creates new form NewJFrame
      */
     public GestionarReservas(PerfilUser parent) {
-        this.ventanauser=parent;
+        this.ventanauser = parent;
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(parent);
     }
+
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
+        salirPrograma();
     }
+
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         ventanauser.setVisible(true);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,21 +90,20 @@ public class GestionarReservas extends javax.swing.JFrame {
                 ModificarButtonActionPerformaed(evt);
             }
         });
-        conexion=conectarBD();
         TablaReservas.setModel(new javax.swing.table.DefaultTableModel(
 
-                devolverarray(MostrarReservasdeUsuarioArrayList(conexion, Variables.usuario,Variables.telefono,Variables.password))
+                devolverarray(mostrarReservasDeUsuarioEnArraylist(Variables.usuario, Variables.telefono, Variables.password))
                 ,
-                new String [] {
+                new String[]{
                         "Fecha de Inicio", "Fecha de Fin", "Hotel", "NºPersonas"
                 }
         ) {
-            boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean[]{
                     false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jScrollPane1.setViewportView(TablaReservas);
@@ -113,10 +113,6 @@ public class GestionarReservas extends javax.swing.JFrame {
             TablaReservas.getColumnModel().getColumn(2).setResizable(false);
             TablaReservas.getColumnModel().getColumn(3).setResizable(false);
         }
-
-
-
-
 
 
         HotelLabel.setText("Nombre Hotel");
@@ -206,12 +202,12 @@ public class GestionarReservas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void ModificarButtonActionPerformaed(java.awt.event.ActionEvent evt){
+    private void ModificarButtonActionPerformaed(java.awt.event.ActionEvent evt) {
 
     }
 
-    private Object[][]devolverarray(ArrayList<ArrayList<String>>hoteles){
-        Object[][] arrayBidimensional = new Object[hoteles.size() ][]; // Incrementa en 1 para incluir el nuevo dato
+    private Object[][] devolverarray(ArrayList<ArrayList<String>> hoteles) {
+        Object[][] arrayBidimensional = new Object[hoteles.size()][]; // Incrementa en 1 para incluir el nuevo dato
 
         for (int i = 0; i < hoteles.size(); i++) { // Itera solo hasta hoteles.size()
             ArrayList<String> lista = hoteles.get(i);
