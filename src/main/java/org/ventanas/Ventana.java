@@ -5,9 +5,9 @@ public class Ventana extends javax.swing.JFrame  {
      * Creates new form Ventana
      */
     public Ventana() {
+        this.setUndecorated(true);
         initComponents();
         this.setLocationRelativeTo(null);
-
     }
 
     /**
@@ -133,6 +133,7 @@ public class Ventana extends javax.swing.JFrame  {
             perfilTrabajador.setVisible(true);
             this.setVisible(false);
         }
+
     }
 
     public void updateVentana(){
