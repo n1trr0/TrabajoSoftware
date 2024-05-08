@@ -1,7 +1,5 @@
 package org.ventanas;
 
-import BBDD.FuncionesGerente;
-import BBDD.FuncionesReserva;
 import Data.Variables;
 
 import java.sql.Connection;
@@ -15,16 +13,16 @@ public class GestionarReservas extends javax.swing.JFrame {
     private javax.swing.JButton ModificarBUtton;
     private javax.swing.JButton volverButton;
     private javax.swing.JButton salirButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel HotelLabel;
+    private javax.swing.JLabel FechaInicioLabel;
+    private javax.swing.JLabel FechaFinLabel;
+    private javax.swing.JLabel PersonasLabel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable TablaReservas;
+    private javax.swing.JTextField HotelTextField;
+    private javax.swing.JTextField FechaInicioTextField;
+    private javax.swing.JTextField FechaFinTextField;
+    private javax.swing.JTextField PersonasTextField;
 
     private static PerfilUser ventanauser;
     private static Connection conexion;
@@ -56,15 +54,15 @@ public class GestionarReservas extends javax.swing.JFrame {
         EliminarButton = new javax.swing.JButton();
         ModificarBUtton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        TablaReservas = new javax.swing.JTable();
+        FechaInicioTextField = new javax.swing.JTextField();
+        FechaFinTextField = new javax.swing.JTextField();
+        PersonasTextField = new javax.swing.JTextField();
+        HotelTextField = new javax.swing.JTextField();
+        HotelLabel = new javax.swing.JLabel();
+        FechaInicioLabel = new javax.swing.JLabel();
+        FechaFinLabel = new javax.swing.JLabel();
+        PersonasLabel = new javax.swing.JLabel();
         volverButton = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
 
@@ -78,16 +76,21 @@ public class GestionarReservas extends javax.swing.JFrame {
                 volverButtonActionPerformed(evt);
             }
         });
-        EliminarButton.setText("ELIMINAR");
+        EliminarButton.setText("Eliminar");
         EliminarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EliminarButtonActionPerformed(evt);
             }
         });
 
-        ModificarBUtton.setText("MODIFICAR");
+        ModificarBUtton.setText("Modificar");
+        ModificarBUtton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarButtonActionPerformaed(evt);
+            }
+        });
         conexion=conectarBD();
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaReservas.setModel(new javax.swing.table.DefaultTableModel(
 
                 devolverarray(MostrarReservasdeUsuarioArrayList(conexion, Variables.usuario,Variables.telefono,Variables.password))
                 ,
@@ -103,12 +106,12 @@ public class GestionarReservas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(TablaReservas);
+        if (TablaReservas.getColumnModel().getColumnCount() > 0) {
+            TablaReservas.getColumnModel().getColumn(0).setResizable(false);
+            TablaReservas.getColumnModel().getColumn(1).setResizable(false);
+            TablaReservas.getColumnModel().getColumn(2).setResizable(false);
+            TablaReservas.getColumnModel().getColumn(3).setResizable(false);
         }
 
 
@@ -116,13 +119,13 @@ public class GestionarReservas extends javax.swing.JFrame {
 
 
 
-        jLabel1.setText("Nombre Hotel");
+        HotelLabel.setText("Nombre Hotel");
 
-        jLabel2.setText("Fecha de Inicio");
+        FechaInicioLabel.setText("Fecha de Inicio");
 
-        jLabel3.setText("Fecha de Fin");
+        FechaFinLabel.setText("Fecha de Fin");
 
-        jLabel4.setText("Numero de Personas");
+        PersonasLabel.setText("Numero de Personas");
 
         volverButton.setText("<");
 
@@ -139,20 +142,20 @@ public class GestionarReservas extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(40, 40, 40)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel1)
-                                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(HotelLabel)
+                                                        .addComponent(FechaInicioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel4)
-                                                        .addComponent(jLabel3)
+                                                        .addComponent(PersonasLabel)
+                                                        .addComponent(FechaFinLabel)
                                                         .addComponent(EliminarButton))))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(FechaInicioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(FechaFinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(PersonasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(ModificarBUtton))
                                 .addContainerGap(51, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
@@ -173,20 +176,20 @@ public class GestionarReservas extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(69, 69, 69)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel1))
+                                                        .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(HotelLabel))
                                                 .addGap(27, 27, 27)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel2))
+                                                        .addComponent(FechaInicioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(FechaInicioLabel))
                                                 .addGap(31, 31, 31)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel3))
+                                                        .addComponent(FechaFinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(FechaFinLabel))
                                                 .addGap(29, 29, 29)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel4))
+                                                        .addComponent(PersonasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(PersonasLabel))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(EliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,12 +206,12 @@ public class GestionarReservas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void ModificarButtonActionPerformaed(java.awt.event.ActionEvent evt){
+
     }
+
     private Object[][]devolverarray(ArrayList<ArrayList<String>>hoteles){
         Object[][] arrayBidimensional = new Object[hoteles.size() ][]; // Incrementa en 1 para incluir el nuevo dato
-
 
         for (int i = 0; i < hoteles.size(); i++) { // Itera solo hasta hoteles.size()
             ArrayList<String> lista = hoteles.get(i);
