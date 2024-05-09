@@ -111,9 +111,9 @@ public class PerfilUser extends javax.swing.JFrame {
     }
 
     private void gestionarButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        GestionarReservas gestionarReservas = new GestionarReservas(this);
+       /* GestionarReservas gestionarReservas = new GestionarReservas(this);
         gestionarReservas.setVisible(true);
-        this.setVisible(false);
+        this.setVisible(false);*/
         // TODO add your handling code here:
     }
 

@@ -1,46 +1,17 @@
 package org.ventanas;
 
-import Data.Variables;
-
-import java.util.ArrayList;
-
-import static Data.FuncionesEnlace.*;
-
+/**
+ *
+ * @author Alex Molero
+ */
 public class GestionarReservas extends javax.swing.JFrame {
-    private javax.swing.JButton EliminarButton;
-    private javax.swing.JButton ModificarBUtton;
-    private javax.swing.JButton volverButton;
-    private javax.swing.JButton salirButton;
-    private javax.swing.JLabel HotelLabel;
-    private javax.swing.JLabel FechaInicioLabel;
-    private javax.swing.JLabel FechaFinLabel;
-    private javax.swing.JLabel PersonasLabel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable TablaReservas;
-    private javax.swing.JTextField HotelTextField;
-    private javax.swing.JTextField FechaInicioTextField;
-    private javax.swing.JTextField FechaFinTextField;
-    private javax.swing.JTextField PersonasTextField;
-
-    private static PerfilUser ventanauser;
 
     /**
      * Creates new form NewJFrame
      */
-    public GestionarReservas(PerfilUser parent) {
-        this.ventanauser = parent;
-        setUndecorated(true);
+    public GestionarReservas() {
         initComponents();
-        setLocationRelativeTo(parent);
-    }
 
-    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        salirPrograma();
-    }
-
-    private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        this.setVisible(false);
-        ventanauser.setVisible(true);
     }
 
     /**
@@ -51,142 +22,149 @@ public class GestionarReservas extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
+        setUndecorated(true);
         EliminarButton = new javax.swing.JButton();
         ModificarBUtton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaReservas = new javax.swing.JTable();
-        FechaInicioTextField = new javax.swing.JTextField();
-        FechaFinTextField = new javax.swing.JTextField();
-        PersonasTextField = new javax.swing.JTextField();
-        HotelTextField = new javax.swing.JTextField();
-        HotelLabel = new javax.swing.JLabel();
-        FechaInicioLabel = new javax.swing.JLabel();
-        FechaFinLabel = new javax.swing.JLabel();
-        PersonasLabel = new javax.swing.JLabel();
+        jTable1 = new javax.swing.JTable();
+        numPersonas = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         volverButton = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
+        fechaInicio = new javax.swing.JFormattedTextField();
+        fechaFin = new javax.swing.JFormattedTextField();
 
-        salirButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salirButtonActionPerformed(evt);
-            }
-        });
-        volverButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                volverButtonActionPerformed(evt);
-            }
-        });
-        EliminarButton.setText("Eliminar");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        EliminarButton.setText("ELIMINAR");
         EliminarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EliminarButtonActionPerformed(evt);
             }
         });
 
-        ModificarBUtton.setText("Modificar");
+        ModificarBUtton.setText("MODIFICAR");
         ModificarBUtton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ModificarButtonActionPerformaed(evt);
+                ModificarBUttonActionPerformed(evt);
             }
         });
-        TablaReservas.setModel(new javax.swing.table.DefaultTableModel(
 
-                devolverarray(mostrarReservasDeUsuarioEnArraylist(Variables.usuario, Variables.telefono, Variables.password))
-                ,
-                new String[]{
-                        "Fecha de Inicio", "Fecha de Fin", "Hotel", "NºPersonas"
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String [] {
+                        "Fecha de Inicio", "Fecha de Fin", "Hotel", "NÂºPersonas"
                 }
         ) {
-            boolean[] canEdit = new boolean[]{
+            boolean[] canEdit = new boolean [] {
                     false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(TablaReservas);
-        if (TablaReservas.getColumnModel().getColumnCount() > 0) {
-            TablaReservas.getColumnModel().getColumn(0).setResizable(false);
-            TablaReservas.getColumnModel().getColumn(1).setResizable(false);
-            TablaReservas.getColumnModel().getColumn(2).setResizable(false);
-            TablaReservas.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        jLabel1.setText("Nombre Hotel");
 
-        HotelLabel.setText("Nombre Hotel");
+        jLabel2.setText("Fecha de Inicio");
 
-        FechaInicioLabel.setText("Fecha de Inicio");
+        jLabel3.setText("Fecha de Fin");
 
-        FechaFinLabel.setText("Fecha de Fin");
+        jLabel4.setText("Numero de Personas");
 
-        PersonasLabel.setText("Numero de Personas");
-
+        volverButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         volverButton.setText("<");
+        volverButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverButtonActionPerformed(evt);
+            }
+        });
 
+        salirButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         salirButton.setText("X");
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
+        });
+
+        fechaInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+
+        fechaFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(40, 40, 40)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(HotelLabel)
-                                                        .addComponent(FechaInicioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(PersonasLabel)
-                                                        .addComponent(FechaFinLabel)
-                                                        .addComponent(EliminarButton))))
+                                                .addGap(29, 29, 29)
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(volverButton))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(EliminarButton)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(FechaInicioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(FechaFinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(PersonasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(ModificarBUtton))
-                                .addContainerGap(51, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(volverButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(salirButton))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(121, 121, 121)
+                                                .addComponent(salirButton))
+                                        .addComponent(ModificarBUtton)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(numPersonas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                                .addComponent(fechaFin, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(fechaInicio, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(volverButton)
                                                         .addComponent(salirButton))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(69, 69, 69)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(HotelLabel))
-                                                .addGap(27, 27, 27)
+                                                        .addComponent(jLabel1)
+                                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(FechaInicioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(FechaInicioLabel))
-                                                .addGap(31, 31, 31)
+                                                        .addComponent(jLabel2)
+                                                        .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(FechaFinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(FechaFinLabel))
+                                                        .addComponent(jLabel3)
+                                                        .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(29, 29, 29)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(PersonasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(PersonasLabel))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLabel4)
+                                                        .addComponent(numPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(46, 46, 46)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(EliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(ModificarBUtton))))
@@ -202,18 +180,16 @@ public class GestionarReservas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void ModificarButtonActionPerformaed(java.awt.event.ActionEvent evt) {
-
+    private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
     }
 
-    private Object[][] devolverarray(ArrayList<ArrayList<String>> hoteles) {
-        Object[][] arrayBidimensional = new Object[hoteles.size()][]; // Incrementa en 1 para incluir el nuevo dato
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
 
-        for (int i = 0; i < hoteles.size(); i++) { // Itera solo hasta hoteles.size()
-            ArrayList<String> lista = hoteles.get(i);
-            arrayBidimensional[i] = lista.toArray(new Object[0]); // Incrementa el índice en 1 para dejar espacio para el nuevo dato
-        }
-        return arrayBidimensional;
+    private void ModificarBUttonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
     }
 
     /**
@@ -244,8 +220,29 @@ public class GestionarReservas extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GestionarReservas().setVisible(true);
+            }
+        });
     }
 
-}
+    // Variables declaration - do not modify
+    private javax.swing.JButton EliminarButton;
+    private javax.swing.JButton ModificarBUtton;
+    private javax.swing.JFormattedTextField fechaFin;
+    private javax.swing.JFormattedTextField fechaInicio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField numPersonas;
+    private javax.swing.JButton salirButton;
+    private javax.swing.JButton volverButton;
 
+
+    // End of variables declaration
+}
