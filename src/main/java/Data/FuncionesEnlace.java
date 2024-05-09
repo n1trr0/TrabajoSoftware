@@ -95,4 +95,11 @@ public class FuncionesEnlace {
         desconexion(BD);
         return reservas;
     }
+    public static boolean UsuarioTieneReservaEnUnHotel(String correo, String telef, String contra, String hotel){
+        Connection BD = conectarBD();
+        String hotel2 = hotel.toUpperCase();
+        boolean compr = TieneReservaEnHotel(BD,correo,telef,contra,hotel2);
+        desconexion(BD);
+        return compr;
+    }
 }

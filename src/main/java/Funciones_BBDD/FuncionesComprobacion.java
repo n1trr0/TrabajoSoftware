@@ -107,35 +107,6 @@ public class FuncionesComprobacion {
         return compr;
     }
 
-    public static boolean comprobacionTieneReservas(Connection BD, String correo, String telef, String contra) {
-        boolean compr = false;
-        if (BuscarUsuario(BD, correo, contra)) {
-            try {
-                Statement statement = BD.createStatement();
-                int id = conseguirID(BD, correo, telef, contra);
-                //comprobar si esta vacio
-                ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS count FROM reservas");
-                int count = 0;
-                if (resultSet.next()) {
-                    count = resultSet.getInt("count");
-                }
-                if (count != 0) {
-                    //comprobamos las reservas
-                    String sqlQuery = "SELECT * FROM reservas";
-                    resultSet = statement.executeQuery(sqlQuery);
-                    while (resultSet.next()) {
-                        int id2 = resultSet.getInt("ID");
-                        if (id2 == id) {
-                            compr = true;
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return compr;
-    }
 
     public static boolean comprobacionValidezFechas(String fechaI, String fechaF) {
 
