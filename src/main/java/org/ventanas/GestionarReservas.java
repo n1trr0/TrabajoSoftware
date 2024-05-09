@@ -1,5 +1,11 @@
 package org.ventanas;
 
+import Data.Variables;
+
+import java.util.ArrayList;
+
+import static Data.FuncionesEnlace.mostrarReservasDeUsuarioEnArraylist;
+
 /**
  *
  * @author Alex Molero
@@ -9,8 +15,10 @@ public class GestionarReservas extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public GestionarReservas() {
+    public GestionarReservas(PerfilUser parent) {
+        this.ventanaPerfil = parent;
         initComponents();
+        setLocationRelativeTo(parent);
 
     }
 
@@ -26,7 +34,7 @@ public class GestionarReservas extends javax.swing.JFrame {
         EliminarButton = new javax.swing.JButton();
         ModificarBUtton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaReservas = new javax.swing.JTable();
         numPersonas = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -54,31 +62,28 @@ public class GestionarReservas extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String [] {
+        TablaReservas.setModel(new javax.swing.table.DefaultTableModel(
+
+                devolverarray(mostrarReservasDeUsuarioEnArraylist(Variables.usuario, Variables.telefono, Variables.password))
+                ,
+                new String[]{
                         "Fecha de Inicio", "Fecha de Fin", "Hotel", "NÂºPersonas"
                 }
         ) {
-            boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean[]{
                     false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane1.setViewportView(TablaReservas);
+        if (TablaReservas.getColumnModel().getColumnCount() > 0) {
+            TablaReservas.getColumnModel().getColumn(0).setResizable(false);
+            TablaReservas.getColumnModel().getColumn(1).setResizable(false);
+            TablaReservas.getColumnModel().getColumn(2).setResizable(false);
+            TablaReservas.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jLabel1.setText("Nombre Hotel");
@@ -191,40 +196,14 @@ public class GestionarReservas extends javax.swing.JFrame {
     private void ModificarBUttonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+    private Object[][] devolverarray(ArrayList<ArrayList<String>> hoteles) {
+        Object[][] arrayBidimensional = new Object[hoteles.size()][]; // Incrementa en 1 para incluir el nuevo dato
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionarReservas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionarReservas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionarReservas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionarReservas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        for (int i = 0; i < hoteles.size(); i++) { // Itera solo hasta hoteles.size()
+            ArrayList<String> lista = hoteles.get(i);
+            arrayBidimensional[i] = lista.toArray(new Object[0]); // Incrementa el Ã­ndice en 1 para dejar espacio para el nuevo dato
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionarReservas().setVisible(true);
-            }
-        });
+        return arrayBidimensional;
     }
 
     // Variables declaration - do not modify
@@ -237,12 +216,11 @@ public class GestionarReservas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable TablaReservas;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField numPersonas;
     private javax.swing.JButton salirButton;
     private javax.swing.JButton volverButton;
-
-
+    private PerfilUser ventanaPerfil;
     // End of variables declaration
 }
