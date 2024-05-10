@@ -16,10 +16,11 @@ public class PerfilGerente extends javax.swing.JFrame {
     /**
      * Creates new form Perfilgerente
      */
-    public PerfilGerente(Ventana principal) {
+    public PerfilGerente(Ventana parent) {
+        this.ventanaprincipal = parent;
         this.setUndecorated(true);
         initComponents();
-        setLocationRelativeTo(principal);
+        setLocationRelativeTo(parent);
     }
 
     /**
