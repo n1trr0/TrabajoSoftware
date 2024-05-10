@@ -115,6 +115,9 @@ public class PerfilGerente extends javax.swing.JFrame {
     }
 
     private void GestionarEmpleadosButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        GestionarEmpleados gestionarEmpleados=new GestionarEmpleados(this);
+        gestionarEmpleados.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
     }
 
