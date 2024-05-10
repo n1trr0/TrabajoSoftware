@@ -40,8 +40,18 @@ public class PerfilGerente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         GestionarEmpleadosButton.setText("Gestionar Empleados");
+        GestionarEmpleadosButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GestionarEmpleadosButtonActionPerformed(evt);
+            }
+        });
 
         GestionarReservasButton.setText("Gestionar Reservas");
+        GestionarReservasButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GestionarReservasButtonActionPerformed(evt);
+            }
+        });
 
         CerrarSesionButton.setText("Cerrar sesion");
         CerrarSesionButton.addActionListener(new java.awt.event.ActionListener() {
@@ -51,8 +61,18 @@ public class PerfilGerente extends javax.swing.JFrame {
         });
 
         SalirButton.setText("X");
+        SalirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
+        });
 
         VolverButton.setText("<");
+        VolverButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,9 +109,28 @@ public class PerfilGerente extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void CerrarSesionButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        Variables.logged = false;
+        volverButtonActionPerformed(evt);
+    }
+
+    private void GestionarEmpleadosButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
+    private void GestionarReservasButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        GestionarReservasGerente gestionarReservasGerente = new GestionarReservasGerente(this);
+        gestionarReservasGerente.setVisible(true);
+        this.setVisible(false);
+    }
+
+    private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        this.setVisible(false);
+        ventanaprincipal.setVisible(true);
+        ventanaprincipal.updateVentana();
+    }
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        salirPrograma();
+    }
     /**
      * @param args the command line arguments
      */

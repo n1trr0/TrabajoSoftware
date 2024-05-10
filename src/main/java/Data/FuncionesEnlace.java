@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import static Funciones_BBDD.FuncionesEmpleados.mostrarReservasTodas;
+import static Funciones_BBDD.FuncionesEmpleados.mostrarReservasTodasGerente;
 import static Funciones_BBDD.FuncionesReserva.*;
 import static Conexion_BBDD.ConexionPrincipal.*;
 import static Funciones_BBDD.FuncionesComprobacion.*;
@@ -95,6 +96,12 @@ public class FuncionesEnlace {
         desconexion(BD);
         return reservas;
     }
+    public static ArrayList<ArrayList<String>> mostrarReservasDeHotelEnArraylistGerente(String correo, String telef, String contra){
+        Connection BD = conectarBD();
+        ArrayList<ArrayList<String>> reservas = mostrarReservasTodasGerente(BD,conseguirLugarTrabajo(BD,conseguirID(BD, correo,telef,contra)));
+        desconexion(BD);
+        return reservas;
+    }
     public static boolean UsuarioTieneReservaEnUnHotel(String correo, String telef, String contra, String hotel){
         Connection BD = conectarBD();
         String hotel2 = hotel.toUpperCase();
@@ -120,5 +127,48 @@ public class FuncionesEnlace {
         String hotel2 = hotel.toUpperCase();
         eliminarReservas(BD,correo,telef,contra,hotel2,fechaI);
         desconexion(BD);
+    }
+
+    public static void EliminarReservaDeUsuarioDesdeGerente(int id){
+        Connection BD = conectarBD();
+        ArrayList<String> datos = conseguirDatosConID(BD,id);
+        String correo,telef,contra;
+        correo = datos.get(0);
+        telef = datos.get(1);
+        contra = datos.get(2);
+        String hotel2 = conseguirLugarTrabajoEmpleado(conseguirIDExtra(Variables.usuario,Variables.telefono,Variables.password)).toUpperCase();
+        String fechaI = sacarFechaInicio(BD,correo,telef,contra,hotel2);
+        eliminarReservas(BD,correo,telef,contra,hotel2,fechaI);
+        desconexion(BD);
+    }
+    public static void ModificarReservaDeUsuarioDesdeGerente(int id,String fechaI,String fechaF,int personas){
+        Connection BD = conectarBD();
+        ArrayList<String> datos = conseguirDatosConID(BD,id);
+        String correo,telef,contra;
+        correo = datos.get(0);
+        telef = datos.get(1);
+        contra = datos.get(2);
+        String hotel2 = conseguirLugarTrabajoEmpleado(conseguirIDExtra(Variables.usuario,Variables.telefono,Variables.password)).toUpperCase();
+        String fechaIA = sacarFechaInicio(BD,correo,telef,contra,hotel2);
+        modificarReverva(BD,correo,telef,contra,fechaIA,hotel2,fechaI,fechaF,personas);
+        desconexion(BD);
+    }
+    public static ArrayList<String> conseguirDatosConIDGerente(int id){
+        Connection BD = conectarBD();
+        ArrayList<String> datos = conseguirDatosConID(BD,id);
+        desconexion(BD);
+        return datos;
+    }
+    public static String conseguirLugarTrabajoEmpleado(int id){
+        Connection BD = conectarBD();
+        String hotel = conseguirLugarTrabajo(BD,id);
+        desconexion(BD);
+        return hotel;
+    }
+    public static int conseguirIDExtra(String correo,String telef,String contra){
+        Connection BD = conectarBD();
+        int id = conseguirID(BD,correo,telef,contra);
+        desconexion(BD);
+        return  id;
     }
 }

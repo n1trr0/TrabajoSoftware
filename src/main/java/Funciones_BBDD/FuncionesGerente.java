@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import static Funciones_BBDD.FuncionesComprobacion.comprobacionFormatoCorreo;
 import static Funciones_BBDD.FuncionesUsuario.*;
 
 public class FuncionesGerente {
@@ -218,5 +220,39 @@ public class FuncionesGerente {
     public static void eliminarEmpleadoYusuario(Connection BD, int id, String hotel) {
         eliminarEmpleado(BD, id, hotel);
         EliminarUsuarioConId(BD, id);
+    }
+
+    public static ArrayList<String> conseguirDatosConID(Connection BD, int id){
+        ArrayList<String> datos = new ArrayList<>();
+        try {
+            boolean compr = false;
+            Statement statement = BD.createStatement();
+            String sqlQuery = "SELECT * FROM usuarios";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            if (!resultSet.next()) {
+                System.out.println("La tabla usuarios esta vacía");
+            } else {
+                resultSet.close();
+                resultSet = statement.executeQuery(sqlQuery);
+                    while (resultSet.next()) {
+                        if (resultSet.getInt("ID")==id) {
+                            String correo = resultSet.getString("Correo");
+                            String telef = resultSet.getString("Telefono");
+                            String contra = resultSet.getString("Contraseña");
+                            datos.add(correo);
+                            datos.add(telef);
+                            datos.add(contra);
+                            compr = true;
+                            break;
+                        }
+                    }
+                    if (!compr) {
+                        System.out.println("No se ha encontrado ningun usuario que contenga los datos introducidos.");
+                    }
+            }
+            return datos;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

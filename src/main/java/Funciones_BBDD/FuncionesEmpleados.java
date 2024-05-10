@@ -53,5 +53,46 @@ public class FuncionesEmpleados {
         }
         return tabla;
     }
+    public static ArrayList<ArrayList<String>> mostrarReservasTodasGerente(Connection BD, String hotel) {
+        ArrayList<ArrayList<String>> tabla = new ArrayList<>();
+        try {
+            Statement statement = BD.createStatement();
+            System.out.println("Reservas registradas para el hotel " + hotel + ":");
+
+            //comprobar si esta vacio
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS count FROM reservas");
+            int count = 0;
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+            if (count != 0) {
+                //comprobamos las reservas
+                String sqlQuery = "SELECT * FROM reservas";
+                resultSet = statement.executeQuery(sqlQuery);
+                while (resultSet.next()) {
+                    if (resultSet.getString("Hotel").equals(hotel)) {
+                        ArrayList<String> fila = new ArrayList<>();
+                        int idU = resultSet.getInt("IDusuario");
+                        String IDUS = Integer.toString(idU);
+                        String FechaI = resultSet.getString("FechaInicio");
+                        String FechaF = resultSet.getString("FechaFin");
+                        int personas = resultSet.getInt("Personas");
+                        String personasS = Integer.toString(personas);
+                        fila.add(IDUS);
+                        fila.add(FechaI);
+                        fila.add(FechaF);
+                        fila.add(personasS);
+                        tabla.add(fila);
+                        System.out.println("ID: " + idU + "  Fecha de inicio de reserva: " + FechaI + "  Fecha de fin de reserva: " + FechaF + " Num de personas: " + personas);
+                    }
+                }
+            } else {
+                System.out.println("La tabla de reservas de este hotel esta vacia");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla;
+    }
 
 }
