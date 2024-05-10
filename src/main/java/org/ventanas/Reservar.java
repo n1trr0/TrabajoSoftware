@@ -200,7 +200,18 @@ public class Reservar extends javax.swing.JFrame {
             errorText.setVisible(true);
             return;
         }
-
+        if(Variables.nivel!=0){
+            errorText.setVisible(false);
+            errorText.setForeground(new java.awt.Color(255, 0, 0));
+            errorText.setText("Solo un cliente puede hacer una reserva");
+            errorText.setVisible(true);
+        }
+        if (!Variables.logged) {
+            errorText.setVisible(false);
+            errorText.setText("Necesitar tener un inicio de sesion activo");
+            errorText.setVisible(true);
+            return;
+        }
         errorText.setVisible(false);
         Variables.hotel = selectedHotel;
         ReservarFechas reservarFechasVentana = new ReservarFechas(this);

@@ -168,12 +168,6 @@ public class ReservarFechas extends javax.swing.JFrame {
             errorText.setVisible(true);
             return;
         }
-        if (!Variables.logged) {
-            errorText.setVisible(false);
-            errorText.setText("Necesitar tener un inicio de sesion activo");
-            errorText.setVisible(true);
-            return;
-        }
         if (!comprobacionFormatoFecha(fechaInicio.getText())) {
             errorText.setVisible(false);
             errorText.setText("Fecha de inicio debe de ser mayor o igual a 2024");
