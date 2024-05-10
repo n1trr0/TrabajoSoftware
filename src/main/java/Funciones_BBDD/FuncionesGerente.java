@@ -200,6 +200,42 @@ public class FuncionesGerente {
         }
     }
 
+    public static ArrayList<ArrayList<String>> SacarEmpleados(Connection BD, String hotel){
+        ArrayList<ArrayList<String>> tabla = new ArrayList<>();
+        try {
+            Statement statement = BD.createStatement();
+            System.out.println("Empleados del hotel " + hotel + ":");
+
+            //comprobar si esta vacio
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS count FROM empleados");
+            int count = 0;
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+            if (count != 0) {
+                //comprobamos las reservas
+                String sqlQuery = "SELECT * FROM empleados";
+                resultSet = statement.executeQuery(sqlQuery);
+                while (resultSet.next()) {
+                    if (resultSet.getString("LugarTrabajo").equals(hotel)) {
+                        ArrayList<String> fila = new ArrayList<>();
+                        int idU = resultSet.getInt("ID");
+                        String IDUS = Integer.toString(idU);
+                        String Hotel = resultSet.getString("LugarTrabajo");
+                        fila.add(IDUS);
+                        fila.add(Hotel);
+                        tabla.add(fila);
+                    }
+                }
+            } else {
+                System.out.println("La tabla de empleados de este hotel esta vacia");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla;
+    }
+
     public static void eliminarEmpleado(Connection BD, int id, String hotel) {
         if (buscarEmpleado(BD, id, hotel)) {
             String nombre = ConseguirNombreConId(BD, id);

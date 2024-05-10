@@ -102,6 +102,12 @@ public class FuncionesEnlace {
         desconexion(BD);
         return reservas;
     }
+    public static ArrayList<ArrayList<String>> mostrarEmpleadosDeHotelEnArraylistGerente(String hotel){
+        Connection BD = conectarBD();
+        ArrayList<ArrayList<String>> reservas = SacarEmpleados(BD,hotel);
+        desconexion(BD);
+        return reservas;
+    }
     public static boolean UsuarioTieneReservaEnUnHotel(String correo, String telef, String contra, String hotel){
         Connection BD = conectarBD();
         String hotel2 = hotel.toUpperCase();
@@ -111,6 +117,9 @@ public class FuncionesEnlace {
     }
     public static boolean HayNumerosEnString(String frase){
         return frase.matches("[1-8]");
+    }
+    public static boolean HayNumerosEnStringEmpl(String frase){
+        return frase.matches("[1-9]+");
     }
     public static boolean TamanoString(String frase){
         return frase.length()==1;
@@ -170,5 +179,15 @@ public class FuncionesEnlace {
         int id = conseguirID(BD,correo,telef,contra);
         desconexion(BD);
         return  id;
+    }
+    public static void annadirEmpleadoGerente(String nombre, String apellido, String correo, String telef, String contra, String hotel){
+        Connection BD = conectarBD();
+        introducirEmpleadoDirectamente(BD,nombre, apellido, correo, telef, contra, hotel);
+        desconexion(BD);
+    }
+    public static void eliminarEmpleadoGerente(int id, String hotel){
+        Connection BD = conectarBD();
+        eliminarEmpleadoYusuario(BD,id,hotel);
+        desconexion(BD);
     }
 }
