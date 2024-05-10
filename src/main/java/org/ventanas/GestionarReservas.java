@@ -1,9 +1,14 @@
 package org.ventanas;
 import Data.Variables;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 import static Data.FuncionesEnlace.*;
+import static Funciones_BBDD.FuncionesComprobacion.comprobacionFormatoFecha;
+import static Funciones_BBDD.FuncionesComprobacion.comprobacionValidezFechas;
+
 /**
  *
  * @author Alex Molero
@@ -32,7 +37,7 @@ public class GestionarReservas extends javax.swing.JFrame {
     private void initComponents() {
 
         EliminarButton = new javax.swing.JButton();
-        ModificarBUtton = new javax.swing.JButton();
+        ModificarButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaReservas = new javax.swing.JTable();
         fechaInicio = new javax.swing.JFormattedTextField();
@@ -46,6 +51,7 @@ public class GestionarReservas extends javax.swing.JFrame {
         volverButton = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
         error = new javax.swing.JLabel();
+        Recordatorio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,46 +72,30 @@ public class GestionarReservas extends javax.swing.JFrame {
         });
 
 
-        EliminarButton.setText("ELIMINAR");
+        EliminarButton.setText("Eliminar");
         EliminarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EliminarButtonActionPerformed(evt);
             }
         });
 
-        ModificarBUtton.setText("MODIFICAR");
+        ModificarButton.setText("Modificar");
 
-        TablaReservas.setModel(new javax.swing.table.DefaultTableModel(
-
-                devolverarray(mostrarReservasDeUsuarioEnArraylist(Variables.usuario, Variables.telefono, Variables.password))
-                ,
-                new String[]{
-                        "Fecha de Inicio", "Fecha de Fin", "Hotel", "Num Personas"
-                }
-        ) {
-            boolean[] canEdit = new boolean[]{
-                    false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+        ModificarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarButtonActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(TablaReservas);
-        if (TablaReservas.getColumnModel().getColumnCount() > 0) {
-            TablaReservas.getColumnModel().getColumn(0).setResizable(false);
-            TablaReservas.getColumnModel().getColumn(1).setResizable(false);
-            TablaReservas.getColumnModel().getColumn(2).setResizable(false);
-            TablaReservas.getColumnModel().getColumn(3).setResizable(false);
-        }
+        TablaReservas = crearTabla();
+        jScrollPane1 = annadirScroll(TablaReservas);
 
         fechaInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
         fechaFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
-        error.setText("error");
-
         HotelLabel.setText("Nombre Hotel");
+
+        Recordatorio.setText("Para eliminar, rellene solo el hotel y fecha inicio");
 
         FechaInicioLabel.setText("Fecha de Inicio");
 
@@ -141,7 +131,7 @@ public class GestionarReservas extends javax.swing.JFrame {
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGap(121, 121, 121)
                                                                 .addComponent(salirButton))
-                                                        .addComponent(ModificarBUtton)
+                                                        .addComponent(ModificarButton)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -153,8 +143,9 @@ public class GestionarReservas extends javax.swing.JFrame {
                                                                         .addGap(9, 9, 9)
                                                                         .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                         .addComponent(FechaFinLabel)
+                                        .addComponent(Recordatorio,javax.swing.GroupLayout.PREFERRED_SIZE,300,javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(error, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(error, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
@@ -184,14 +175,16 @@ public class GestionarReservas extends javax.swing.JFrame {
                                                         .addComponent(PersonasLabel)
                                                         .addComponent(PersonasTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(46, 46, 46)
+                                                .addComponent(Recordatorio)
+                                                .addGap(12,12,12)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(EliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(ModificarBUtton,javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(ModificarButton,javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 85, Short.MAX_VALUE))
         );
 
-        ModificarBUtton.getAccessibleContext().setAccessibleDescription("");
+        ModificarButton.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>
@@ -205,7 +198,32 @@ public class GestionarReservas extends javax.swing.JFrame {
         return arrayBidimensional;
     }
     private void EliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        error.setForeground(new java.awt.Color(255, 0, 0));
+        if(HotelText.getText().isEmpty() ||fechaInicio.getText().isEmpty()){
+            error.setVisible(false);
+            error.setText("Rellena los campos acordes para continuar");
+            error.setVisible(true);
+            return;
+        }
+        if(!UsuarioTieneReservaEnUnHotel(Variables.usuario,Variables.telefono,Variables.password,HotelText.getText())){
+            error.setVisible(false);
+            error.setText("No tiene ninguna reserva hecha en el hotel");
+            error.setVisible(true);
+            return;
+        }
+        if (!comprobacionFormatoFecha(fechaInicio.getText())) {
+            error.setVisible(false);
+            error.setText("Fecha de inicio debe de ser mayor o igual a 2024");
+            error.setVisible(true);
+            return;
+        }
+        error.setVisible(false);
+        error.setForeground(new java.awt.Color(0, 0, 0));
+        error.setText("Reserva eliminada con exito");
+        error.setVisible(true);
+        EliminarReservaDeUsuario(Variables.usuario,Variables.telefono,Variables.password,HotelText.getText(),fechaInicio.getText());
+        DefaultTableModel modelo = (DefaultTableModel) TablaReservas.getModel();
+        modelo.setDataVector(devolverarray(mostrarReservasDeUsuarioEnArraylist(Variables.usuario, Variables.telefono, Variables.password)), new Object[]{"Fecha de Inicio", "Fecha de Fin", "Hotel", "Num Personas"});
     }
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,6 +232,87 @@ public class GestionarReservas extends javax.swing.JFrame {
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         ventanaUser.setVisible(true);
+    }
+
+    private void ModificarButtonActionPerformed(java.awt.event.ActionEvent evt){
+        error.setForeground(new java.awt.Color(255, 0, 0));
+        if(HotelText.getText().isEmpty() ||fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty() || PersonasTextfield.getText().isEmpty()){
+            error.setVisible(false);
+            error.setText("Rellena todos los campos para continuar");
+            error.setVisible(true);
+            return;
+        }
+        if(!UsuarioTieneReservaEnUnHotel(Variables.usuario,Variables.telefono,Variables.password,HotelText.getText())){
+            error.setVisible(false);
+            error.setText("No tiene ninguna reserva hecha en el hotel");
+            error.setVisible(true);
+            return;
+        }
+        if (!comprobacionFormatoFecha(fechaInicio.getText())) {
+            error.setVisible(false);
+            error.setText("Fecha de inicio debe de ser mayor o igual a 2024");
+            error.setVisible(true);
+            return;
+        }
+        if (!comprobacionFormatoFecha(fechaFin.getText())) {
+            error.setVisible(false);
+            error.setText("Fecha de fin debe de ser mayor o igual a 2024");
+            error.setVisible(true);
+            return;
+        }
+        if (comprobacionValidezFechas(fechaInicio.getText(), fechaFin.getText())) {
+            error.setVisible(false);
+            error.setText("La fecha final no puede ser anterior a la inicial");
+            error.setVisible(true);
+            return;
+        }
+        if(!TamanoString(PersonasTextfield.getText()) || !HayNumerosEnString(PersonasTextfield.getText())){
+            error.setVisible(false);
+            error.setText("Solo puede haber 8 personas como maximo");
+            error.setVisible(true);
+            return;
+        }
+        error.setVisible(false);
+        error.setForeground(new java.awt.Color(0, 0, 0));
+        error.setText("Reserva modificada con exito");
+        error.setVisible(true);
+        int personasI = Integer.parseInt(PersonasTextfield.getText());
+        ModificarReservaDeUsuario(Variables.usuario,Variables.telefono,Variables.password,HotelText.getText(),fechaInicio.getText(),fechaFin.getText(),personasI);
+        DefaultTableModel modelo = (DefaultTableModel) TablaReservas.getModel();
+        modelo.setDataVector(devolverarray(mostrarReservasDeUsuarioEnArraylist(Variables.usuario, Variables.telefono, Variables.password)), new Object[]{"Fecha de Inicio", "Fecha de Fin", "Hotel", "Num Personas"});
+    }
+
+    private JTable crearTabla(){
+        javax.swing.JTable TablaReservas=new JTable();
+        TablaReservas.setModel(new javax.swing.table.DefaultTableModel(
+
+                devolverarray(mostrarReservasDeUsuarioEnArraylist(Variables.usuario, Variables.telefono, Variables.password))
+                ,
+                new String[]{
+                        "Fecha de Inicio", "Fecha de Fin", "Hotel", "Num Personas"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
+        return TablaReservas;
+    }
+
+    private JScrollPane annadirScroll(JTable tabla){
+        javax.swing.JScrollPane jScrollPane=new JScrollPane();
+        jScrollPane.setViewportView(tabla);
+        if (tabla.getColumnModel().getColumnCount() > 0) {
+            tabla.getColumnModel().getColumn(0).setResizable(false);
+            tabla.getColumnModel().getColumn(1).setResizable(false);
+            tabla.getColumnModel().getColumn(2).setResizable(false);
+            tabla.getColumnModel().getColumn(3).setResizable(false);
+        }
+        return jScrollPane;
     }
 
     /**
@@ -256,8 +355,9 @@ public class GestionarReservas extends javax.swing.JFrame {
     private javax.swing.JLabel FechaFinLabel;
     private javax.swing.JLabel FechaInicioLabel;
     private javax.swing.JLabel HotelLabel;
+    private javax.swing.JLabel Recordatorio;
     private javax.swing.JTextField HotelText;
-    private javax.swing.JButton ModificarBUtton;
+    private javax.swing.JButton ModificarButton;
     private javax.swing.JLabel PersonasLabel;
     private javax.swing.JTextField PersonasTextfield;
     private javax.swing.JLabel error;
@@ -268,5 +368,6 @@ public class GestionarReservas extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField fechaInicio;
     private javax.swing.JFormattedTextField fechaFin;
     private static PerfilUser ventanaUser;
+
     // End of variables declaration
 }

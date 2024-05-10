@@ -1,1 +1,142 @@
-[]
+[
+  {
+    "name": "AC BY MARRIOTT ALCALA DE HENAR",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.5028,
+      "longitude": -3.36574
+    },
+    "hotelId": "ARMADALC",
+    "chainCode": "AR",
+    "lastUpdate": "2024-04-29T06:09:58"
+  },
+  {
+    "name": "AC BY MARRIOTT GUADALAJARA",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.63472,
+      "longitude": -3.17281
+    },
+    "hotelId": "ARMADGUA",
+    "chainCode": "AR",
+    "lastUpdate": "2024-01-24T03:22:55"
+  },
+  {
+    "name": "AC BY MARRIOTT HOTEL ATOCHA",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.40393,
+      "longitude": -3.68976
+    },
+    "hotelId": "ARMADATO",
+    "chainCode": "AR",
+    "lastUpdate": "2024-01-24T20:06:52"
+  },
+  {
+    "name": "AC BY MARRIOTT COSLADA AEROPUE",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.44518,
+      "longitude": -3.54075
+    },
+    "hotelId": "ARMADCOS",
+    "chainCode": "AR",
+    "lastUpdate": "2024-01-23T19:35:36"
+  },
+  {
+    "name": "AC BY MARRIOTT HOTEL ARAVACA",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.46466,
+      "longitude": -3.78494
+    },
+    "hotelId": "ARMADACH",
+    "chainCode": "AR",
+    "lastUpdate": "2023-06-15T09:59:26"
+  },
+  {
+    "name": "AC BY MARRIOTT AVENIDA AMERICA",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.43804,
+      "longitude": -3.67244
+    },
+    "hotelId": "ARMADAVE",
+    "chainCode": "AR",
+    "lastUpdate": "2024-05-06T06:07:22"
+  },
+  {
+    "name": "AC BY MARRIOTT LOS VASCOS",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.44901,
+      "longitude": -3.71128
+    },
+    "hotelId": "ARMADVAS",
+    "chainCode": "AR",
+    "lastUpdate": "2024-01-15T12:28:26"
+  },
+  {
+    "name": "AC BY MARRIOTT HOTEL CUZCO",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.45856,
+      "longitude": -3.69038
+    },
+    "hotelId": "ARMADCUZ",
+    "chainCode": "AR",
+    "lastUpdate": "2024-05-06T06:01:09"
+  },
+  {
+    "name": "AC BY MARRIOTT HOTEL AITANA",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.45606,
+      "longitude": -3.68986
+    },
+    "hotelId": "ARMADAIT",
+    "chainCode": "AR",
+    "lastUpdate": "2024-05-06T06:10:11"
+  },
+  {
+    "name": "AC CARLTON MADRID",
+    "iataCode": "MAD",
+    "address": {
+      "countryCode": "ES"
+    },
+    "geoCode": {
+      "latitude": 40.40516,
+      "longitude": -3.69347
+    },
+    "hotelId": "ARMADCAR",
+    "chainCode": "AR",
+    "lastUpdate": "2024-02-05T11:55:26"
+  }
+]

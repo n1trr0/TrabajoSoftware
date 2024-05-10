@@ -102,4 +102,23 @@ public class FuncionesEnlace {
         desconexion(BD);
         return compr;
     }
+    public static boolean HayNumerosEnString(String frase){
+        return frase.matches("[1-8]");
+    }
+    public static boolean TamanoString(String frase){
+        return frase.length()==1;
+    }
+    public static void ModificarReservaDeUsuario(String correo,String telef,String contra,String hotel,String fechaI,String fechaF,int personas){
+        Connection BD = conectarBD();
+        String hotel2 = hotel.toUpperCase();
+        String fechaIA = sacarFechaInicio(BD,correo,telef,contra,hotel2);
+        modificarReverva(BD,correo,telef,contra,fechaIA,hotel2,fechaI,fechaF,personas);
+        desconexion(BD);
+    }
+    public static void EliminarReservaDeUsuario(String correo,String telef,String contra,String hotel,String fechaI){
+        Connection BD = conectarBD();
+        String hotel2 = hotel.toUpperCase();
+        eliminarReservas(BD,correo,telef,contra,hotel2,fechaI);
+        desconexion(BD);
+    }
 }
